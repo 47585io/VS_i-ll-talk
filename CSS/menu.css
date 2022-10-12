@@ -1,0 +1,54 @@
+.mark{
+	background-color: red;
+	border-radius: 10px;
+	width: 100%;
+	height: 50px;
+	position: absolute;
+    left: 0;
+    z-index:10;
+	clip-path: circle(5px at 5px 10px);
+}
+.vscode{
+            clip-path: polygon(
+            10% 25%,
+            0 35%,
+            75% 100%,
+            100% 85%,
+            100% 15%,
+            75% 0,
+            0 65%,
+            10% 75%,
+            75% 30%,
+            75% 70%,
+            10% 25%);
+            background-color: rgb(0,117,181);
+            width: 25px;
+            height: 25px;
+            border-radius: 5px;
+            box-shadow: 5px 5px 5px 5px rgb(0,126,205) ;
+            display: inline-block;
+        }
+#menu{
+	position: fixed;
+	top: 0;
+    right: 0;
+	z-index: 10;
+    height: 30px;
+    max-width: 100%;
+    overflow: hidden;
+    transition-duration: 0.75s;
+}
+
+select{
+    transition-duration: 0.75s;
+    max-width:7ch;
+    margin-top: 5px;
+}
+option:first-child{
+	display: none;
+}
+select:hover{
+    filter:contrast(0.8);
+    border-radius: 10px;
+}
+ 
