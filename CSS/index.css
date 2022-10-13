@@ -70,7 +70,10 @@ textarea{
    filter: brightness(0);
    caret-color: blue;
 }
-
+#output{
+	height: 2000%;
+	width: 100%;
+}
 
 a,.T{
 	color: #61afef;
