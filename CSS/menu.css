@@ -37,10 +37,12 @@
     max-width: 100%;
     overflow: hidden;
     transition-duration: 0.75s;
+    transition-timing-function: ease-out; 
 }
 
 select{
-    transition-duration: 0.75s;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-out;
     max-width:7ch;
     margin-top: 5px;
 }

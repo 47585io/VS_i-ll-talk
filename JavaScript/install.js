@@ -27,7 +27,7 @@ function initInstall() {
 	for (var t of Allther) {
 		var but = document.createElement("button")
 		but.className = "install"
-		but.appendChild(document.createTextNode("install"))
+		but.appendChild(document.createTextNode("复制"))
 		t.appendChild(but)
 	}
 }
@@ -35,8 +35,7 @@ function bindInstall() {
 	var Allinstall=document.getElementsByClassName("install")
 	for (var ins of Allinstall){
 		ins.onclick = function () {
-			OpenPos("<button>hhhhh</button>",
-				50, 250)
+			Console(ins.parentNode.innerHTML)
 		}
 		ins.onmouseout = function () {
 			Close()

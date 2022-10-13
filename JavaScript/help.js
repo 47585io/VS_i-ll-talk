@@ -23,3 +23,4 @@ mymenu_Son.select_funcs_list[2].push(function () {
 	switchto(tab3)
 })
 
+

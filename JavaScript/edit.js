@@ -1,5 +1,7 @@
 var output = document.getElementById("output")
 var input = document.getElementById("input")
+var Idnumber
+
 /*
 function findword() {
 	let result = ["getElementById"]
@@ -18,15 +20,15 @@ function findword() {
 
 mymenu_Son.select_funcs_list[1].push(function () {
 	//olny read
+    clearInterval(Idnumber)
 	switchto(tab2)
 	input.style.display = "none"
-	clearInterval()
 })
 
 mymenu_Son.select_funcs_list[1].push(function () {
 	switchto(tab2)
 	input.style.display = "block"
-setInterval(function () {
+Idnumber= setInterval(function () {
 	mydraw_js.Run_Text()
 	to()
 	//findword()
@@ -34,10 +36,13 @@ setInterval(function () {
 })
 
 mymenu_Son.select_funcs_list[1].push(function () {
+	clearInterval(Idnumber)
+	input.style.display = "none"
 	switchto(tab2)
-	input.value = "alert('my')"
+	OpenPos("<input type='file' id='filechooser'/><input value='/'>",0,0)
+	var filechooser=document.getElementById("filechooser")
+	input.value = filechooser.value
 	mydraw_js.Run_Text()
 	to()
-	clearInterval()
 })
 
