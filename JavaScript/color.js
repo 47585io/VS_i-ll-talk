@@ -949,7 +949,7 @@ class Draw_py extends Draw_js {
 }
 
 
-
+var mydraw_text= new Draw()
 var mydraw_js = new Draw_js()
 mydraw_js.Run()
 var mydraw_html = new Draw_html()
