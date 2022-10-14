@@ -35,7 +35,7 @@ function bindInstall() {
 	var Allinstall=document.getElementsByClassName("install")
 	for (var ins of Allinstall){
 		ins.onclick = function () {
-			Console(ins.parentNode.innerHTML)
+			Console(this.parentNode.innerHTML)
 		}
 		ins.onmouseout = function () {
 			Close()
