@@ -6,11 +6,12 @@
 	border: 0;
 	color: #abb2bf;
 	background-color: rgb(28, 32, 37);
-	font-size: medium;
+	font-size: 10px;
 	font-weight: 400;
 	tab-size:4;
 	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
+
 *::selection{
 	background-color: rgba(62,69,87,0.4);
 }
@@ -28,20 +29,28 @@ textarea{
 	top: -1000px;
 	max-height: 40%;
 	max-width: 80%;
+	font-size: medium;
 	z-index: 10;
 	padding: 7px;
 	background-color: #1e1f23 !important;
 }
 #maind * {
 	background-color: inherit;
+	font-size: medium;
 }
-#main,#tab2,#tab3,#tab4{
+#main,#tab2,#tab3{
 	counter-reset: mytitle 0;
 	position: absolute;
 	top: 0px;
 	left: 0px;
 	width: 100%;
 	height: 100%;
+	line-height: 22px;
+}
+#main,#tab3{
+    padding-left: 10px;
+	padding-right: 9px;
+	width: calc(100% - 19px);
 }
 #main *{
 	background-color: inherit;
@@ -78,28 +87,25 @@ textarea{
 a,.T{
 	color: #61afef;
 	font-weight: 450;
-	
 }
 .T[mytext=""]{
 	cursor: default;
 }
+li:not(.code li){
+    color:#79c3a1;
+	padding-left: 10px;
+	padding-right: 10px;
+}
 
-li{
-	color: #98c379;
-}
-br{
-	border: #909090 0.1px groove;
-    margin-bottom: 10px;
-	margin-top: 5px;
-}
 button{
 	background-color: coral;
 }
 
 .title{
-	font-size: 1.25em;
+	font-size: 1.2em;
 	transition-duration: 0.75s;
-	padding: 3px;
+	padding-left: 10px;
+	font-weight: 450;
 }
 .title::before{
 	counter-reset: my_small_title 0;
@@ -124,23 +130,21 @@ button{
 	filter: contrast(0.92);
 }
 .newp{	
-	display: block;
-	line-height: 21px;
-	font-size: 10.5px;
-    margin-left: 10px;
-	margin-right: 10px;
+	line-height: 22px;
+	font-size: 10px;
+   
 }
 .code:not(#output) {
 	cursor: default;
 	font-weight: 400;
+	font-size: 15px;
 	background-color: rgb(35, 40, 46) !important;
 	overflow: auto;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	max-height: 80vh;
 	counter-reset: mycount 0;
-	margin-left: 10px ;
-    margin-right: 8px;
+	
 }
 
 .install{
@@ -149,7 +153,7 @@ button{
 	transition-delay: 0.25s;
 	position: relative;
 	top: -20px;
-	left: 86%;
+	left: 88%;
 	line-height: 20px;
 	font-size: 14px;
 	width: 12%;
@@ -177,10 +181,16 @@ button{
 .code li{
 	cursor: default;
 	display: block;
+
 	counter-increment: mycount 1;
 	color: #abb2bf;
+	font-size: medium;
 	font-weight: 400;
-	line-height: 22px;
+	line-height: 23px;
+
+}
+.code li *,.code *{
+	font-size: medium;
 }
 .code li:hover > * {
 	filter: contrast(0.82);
@@ -193,7 +203,7 @@ button{
 }
 .code li:hover::before {
 	color: #abb2bf;
-	filter: brightness(1.05);
+	filter:brightness(1.05);
 }
 .code li pre{
 	font-weight: 400;

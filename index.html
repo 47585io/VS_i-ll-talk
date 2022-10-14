@@ -20,65 +20,127 @@
 
 <body>
 	<div id="menu" isopen="1">
-		<button class="vscode" id="vscode" ></button>
+		<button class="vscode" id="vscode"></button>
 		<select id="goto">
 			<option>转到</option>
-			
+
 			<option>转到上一个Mark</option>
-		    <option>转到下一个Mark</option>
-	        <option>转到第一个Mark</option>
-	        <option>转到最后的Mark</option>
-	        <option>转到指定的Mark</option>
-		    <option>转到页面开头</option>
+			<option>转到下一个Mark</option>
+			<option>转到第一个Mark</option>
+			<option>转到最后的Mark</option>
+			<option>转到指定的Mark</option>
+			<option>转到页面开头</option>
 			<option>转到页面末尾</option>
-		    <option disabled>添加一个Mark  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;仅双击</option>
-		    <option disabled>删除一个Mark &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 仅长按</option>
-		    <option>清除所有Mark</option>
+			<option disabled>添加一个Mark &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;仅双击</option>
+			<option disabled>删除一个Mark &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 仅长按</option>
+			<option>清除所有Mark</option>
 			<option>都不选</option>
 		</select>
 		<select id="edit">
 			<option>编辑</option>
 			<option>只读编辑器</option>
-	        <option>只写编辑器</option>
+			<option>只写编辑器</option>
 			<option>选择语言</option>
 			<option>放入一个文件到编辑器</option>
 		</select>
 		<select id="help">
-		    <option>帮助</option>
-		    <option>开始</option>
-		    <option>速览帮助文档</option>
-		    <option>运行编辑器的文本</option>
-		    <option>打开输出窗口</option>
-		    
+			<option>帮助</option>
+			<option>开始</option>
+			<option>速览帮助文档</option>
+			<option>运行编辑器的文本</option>
+			<option>打开输出窗口</option>
+
 		</select>
-		
+
 	</div>
 
 	<div id="maind" ishover="0"></div>
 
-	<div id="tab2" >	
-		<pre class='code' id="output" >
+	<div id="tab2">
+		<pre class='code' id="output">
 		</pre>
-		<textarea id="input">
-</textarea>
-		</div>
+		<textarea id="input"></textarea>
+	</div>
 
 	<div id="tab3"></div>
 
-	<div id="main">	
-		<br><br>
+	<div id="main">
+		<br>
+		<!--1-->
+<h1 class="title">愉快地开始</h1>
 		<p class="newp">
-			
-		</p>
-		<pre class="code broken" mark="html,0,1;">
-<hh>...</hh>
-		</pre>
-	
+要实现JavaScript文件操作，必须先设置一个input元素，并把其type属性置为"file",让用户选择文件
+
+【实例1】下例演示了:在用户选择一个文件后(input的value变化时)，将其输出, 您可以尝试着点击按扭查看效果
 		
+</p>
+		<div class="ther">
+		<pre class="code broken" mark="html,0,5;js,5,9;html,9,12">
+< !DOCTYPE HTML>
+< html>
+< body>
+	<input type="file" id="myfile">
+	<script>
+	    var myfile=document.querySelector("#myfile")
+	        myfile.onchange=function (event,){
+			alert(this.value)
+		}
+	</script>
+< /body>
+< /html>
+		</pre>
+		</div >
+
+		<div class="code">
+运行结果:
+<br><br>
+<input type="file" id="myfile">
+</div>
+
+<!--2-->
+
+	<br><br>
+    为了方便用户在脚本中访问这些将要提交的文件,HTML5新增了
+	<a class="T" mytext="<a>(FileList)</a><br>表示用户选择的文件列表
+	<br/><br /><li>name</li><li>lastModifiedDate</li>">FileList</a>
+	和<a class="T" mytext="<a>(File)</a><br>表示用户选择的文件列表中的文件对象
+	<br/><br /><li>name</li><li>lastModifiedDate</li>"> File </a>对象
+	<br><br>
+	【实例2】下面实例演示了如何使用FileList和File对象访问用户提交的文件名称列表。
 	
+
+<br><br>
+<pre class="code broken" mark="html,0,1;js,1,9;html,9,14">
+<script>
+	window.onload = function () {
+		var file = document.getElementById("file");
+		file.onchange = function () {
+			for (var i = 0; i < file.files.length; i++)
+				console.log(file.files[i].name);
+		  //files 为 Filelist对象, files[i] 为 File对象
+			};
+	}
+</script>
+< body>
+	<input type="file" id="file" multiple>
+	<!--multiple 属性是 HTML5 中的新属性, 如果使用该属性，则字段可接受多个值-->
+< /body>
+</pre>
+<br>
+<div class="code">运行结果:<br><br>
+	<input type="file" id="files" multiple>
+</div>
+
+
+<!--3-->
+<br/>
+<h1 class="title">Blob对象</h1>
+
+
+
+
+
+
 	</div>
-
-	
 </body>
-
 </html>

@@ -41,6 +41,7 @@
 }
 
 select{
+    font-size: 15px;
     transition-duration: 0.4s;
     transition-timing-function: ease-out;
     max-width:7ch;

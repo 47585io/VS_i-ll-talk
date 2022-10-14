@@ -16,6 +16,7 @@ for (key of Object. keys(laugue)) {
 	var l = document.createElement("li")
 	text = document.createTextNode(key)
 	l.appendChild(text)
+	l.style.fontSize="25px"
 	ul.appendChild(l)
 }
 

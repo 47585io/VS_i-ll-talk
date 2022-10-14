@@ -504,12 +504,14 @@ class Draw_js extends Draw {
 							this.word_list[i] == c ||
 							this.word_list[i].indexOf(c) != -1
 						)
-							if (c == ".")
+							if (c == ".") {
 								this.word_list[i] = this.draw(
 									this.word_list[i],
 									color,
 									"object: " + this.word_list[i]
 								)
+								
+							}
 							else if (c == "(") {
 								this.word_list[i] = this.draw(
 									this.word_list[i],
