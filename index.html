@@ -43,6 +43,7 @@
 			<option>只写编辑器</option>
 			<option>选择语言</option>
 			<option>放入一个文件到编辑器</option>
+			<a download target="_blank" href="" id="edit_download"><option>将编辑器文本保存成文件</option></a>
 		</select>
 		<select id="help">
 			<option>帮助</option>
@@ -150,12 +151,12 @@ function getSize(){
 myfile.onchange=getSize()
 </pre>
 </div>
-<br/>
+
 
 <p class="note">
-注意：对于图像类型的文件，Blob对象的type属性都是以"image/"开头，后面是图像类型。
+注意：对于图像类型的文件，Blob对象的type属性都是以<q>image/</q>开头，后面是图像类型。
 </p>
-<br />
+<br /><br />
 
 【实例4】通过type属性，我们可以判断它是不是一个图片，例如:
 <br/><br/>
@@ -176,8 +177,16 @@ myfile.onchange=function()
 <br/><br>
 
 <h1 class="title">创建Blob</h1>
-
+<br>
+创建Blob对象的基本用法如下：<br><br>
+<div class="ther" truecode=" ">
+<pre class="code code_js">
+var blob = new Blob(blobParts, type);</pre>
+</div>
 <br /><br>
+
+
+
 
 
 	</div>

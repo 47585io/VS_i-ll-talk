@@ -75,9 +75,16 @@ mymenu_Son.select_funcs_list[1].push(function () {
 	var filechooser=document.getElementById("filechooser")
 	filechooser.onchange = function () {
 		input.value = this.value
-		mydraw_js.Run_Text()
+		laugue[now_laugue].Run_Text()
 		to()
 		this.style.display="none"
 	}
 })
 
+mymenu_Son.select_funcs_list[1].push(function () {
+	var blob = new Blob( [input.value])
+	var str = window.URL.createObjectURL(blob)
+	var a=document.getElementById("edit_download")
+	a.setAttribute("href",str)
+	Console(output.innerHTML)
+ })

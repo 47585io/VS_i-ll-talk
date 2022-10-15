@@ -77,17 +77,21 @@ textarea{
    opacity: 0.1;
    padding-left: 41px;
    filter: brightness(0);
-   caret-color: blue;
+   caret-color: rgb(0, 208, 255);
 }
 #output{
 	height: 2000%;
 	width: 100%;
 }
 
+q{
+	color: #79c379;
+}
 a,.T{
 	color: #61afef;
 	font-weight: 450;
 }
+
 .T[mytext=""]{
 	cursor: default;
 }
