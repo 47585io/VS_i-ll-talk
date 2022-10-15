@@ -22,7 +22,9 @@ for (key of Object. keys(laugue)) {
 
 ul.onclick = function (e) {
 	alert(e.target.innerText)
-    now_laugue= e.target.innerText
+	now_laugue = e.target.innerText
+	laugue[now_laugue].Run_Text()
+	to()
 }
 
 /*
