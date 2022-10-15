@@ -1,6 +1,6 @@
 lastMs=500
 lastCount=0
-xms=250
+xms=175
 
 function calcMs(last,now,xms){
     if(last<now)

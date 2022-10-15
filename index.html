@@ -52,17 +52,14 @@
 			<option>打开输出窗口</option>
 
 		</select>
-
-	</div>
-
+</div>
+    <input id="file" type="file"> 
 	<div id="maind" ishover="0"></div>
-
 	<div id="tab2">
 		<pre class='code' id="output">
 		</pre>
 		<textarea id="input"></textarea>
 	</div>
-
 	<div id="tab3"></div>
 
 	<div id="main">
@@ -72,17 +69,20 @@
 		<p class="newp">
 要实现JavaScript文件操作，必须先设置一个input元素，并把其type属性置为"file",让用户选择文件
 
-【实例1】下例演示了:在用户选择一个文件后(input的value变化时)，将其输出, 您可以尝试着点击按扭查看效果
+【实例1】下例演示了:在用户选择一个文件后(input的value变化时)，将其输出
+
+您可以尝试着单击复制按扭，生成的彩色html代码会输出到输出窗口
+如果您双击复制按扭，运行结果会输出到输出窗口，(帮助 → 输出窗口)
 		
 </p>
-		<div class="ther" truecode="writetoConsole(['$$'])">
+		<div class="ther" truecode="indexOne()">
 		<pre class="code broken" mark="html,0,5;js,5,9;html,9,12">
 < !DOCTYPE HTML>
 < html>
 < body>
-	<input type="file" id="myfile">
+	<input type="file" id="file">
 	<script>
-	    var myfile=document.querySelector("#myfile")
+	    var myfile=document.querySelector("#file")
 	        myfile.onchange=function (event,){
 			alert(this.value)
 		}
@@ -92,26 +92,20 @@
 		</pre>
 		</div >
 
-		<div class="code">
-运行结果:
-<br><br>
-<input type="file" id="myfile">
-</div>
-
 <!--2-->
 
-	<br><br>
+	<br />
     为了方便用户在脚本中访问这些将要提交的文件, <br>HTML5新增了
 	<a class="T" mytext="<a>(FileList)</a><br>表示用户选择的文件列表
 	<br/>">FileList</a>
 	和<a class="T" mytext="<a>(File)</a><br>表示用户选择的文件列表中的文件对象
 	<br/><br /><li>name   文件名</li><li>lastModifiedDate    文件最后的修改时间</li>"> File </a>对象
-	<br><br>
+	<br/><br/>
 	【实例2】下面实例演示了如何使用FileList和File对象访问用户提交的文件名称列表。
-	
+	<br /><br/>
 
-<br><br>
-<pre class="code broken" mark="html,0,6;js,6,14;html,14,16">
+<div truecode="indexTwo()" class="ther">
+<pre class="code broken" mark="html,0,6;js,6,14;html,14,16" >
 
 < body>
 	<input type="file" id="file" multiple>
@@ -119,19 +113,17 @@
 < /body>
 <script >
 
-	var file = document.getElementById("file");
-	file.onchange = function () {
-		for (var i = 0; i < file.files.length; i++)
-			console.log(file.files[i].name);
+	var myfile = document.getElementById("file");
+	myfile.onchange = function () {
+		for (var i = 0; i < this.files.length; i++)
+			console.log(this.files[i].name);
 		//files 为 Filelist对象, files[i] 为 File对象
 	};
 
 </script>
 </pre>
-<br>
-<div class="code">运行结果:<br><br>
-	<input type="file" id="files" multiple>
 </div>
+
 
 
 <!--3-->
@@ -147,6 +139,7 @@ type 表示Blob的MIME类型，如果为未知类型，则返回一个空字符�
 <br/><br/>
 【实例3】关键代码
 <br /><br />
+<div truecode="indexThree()" class="ther">
 <pre class="code code_js">
 function getSize(){
 	for (let file of document.getElementById("file").files)
@@ -154,20 +147,34 @@ function getSize(){
 		console.log(file.type)
 		//因为file对象继承自Blob，所以也拥有size和type属性
 }
-getSize()
+myfile.onchange=getSize()
 </pre>
-<br/>
-<div class="code">
-	运行结果:<br/><br>
-    <input type="file" id="threeinput">
 </div>
+<br/>
+
 <p class="note">
 注意：对于图像类型的文件，Blob对象的type属性都是以"image/"开头，后面是图像类型。
 </p>
 <br />
 
-【实例4】
+【实例4】通过type属性，我们可以判断它是不是一个图片，例如:
+<br/><br/>
+<div truecode="indexFour()" class="ther">
+<pre class="code code_js">
+myfile.onchange=function()
+{
+	typestr = this.files[0].type
+	if(!/image\/\w+/.test(typestr))
+        //!/image\/\w+/是一个正则表达式，用于判断它是否以image/开头，
+        //当然，和字符串一样，js中的正则表达式也是对象，它的test方法用于将自己和指定字符串进行匹配
+	    alert("not image")
+	else
+	    alert(this.files[0].name)
+}
+</pre>
+</div>
 <br/><br>
+
 <h1 class="title">创建Blob</h1>
 
 <br /><br>

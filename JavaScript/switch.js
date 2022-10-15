@@ -14,25 +14,33 @@ function switchto(obj) {
     nowtab=obj
 }
 
-function Console(str, save = 0) {
-    if(!save)
+var olnytext
+function clearConsole() {
     tab3.innerHTML = ""
-	var tid = document.createElement("textarea")
-	tid.value = str
-    tab3.appendChild(tid)
+    olnytext = document.createElement("textarea")
+    tab3.appendChild(olnytext)
+}
+
+function Console(str, save = 0) {
+    if (!save) {
+        olnytext.value=""
+    }
+    olnytext.value += str+"\n"
     OpenPos("输出到输出窗口", event.pageX-200,event.pageY)
 }
 
 function writetoConsole(list) {
-    tab3.innerHTML=""
+    clearConsole()
     for (var l of list) {
         if (typeof (l) == 'string') {
             l = document.createTextNode(l)
         }
-        tab3.appendChild(l)
+        tab3.insertBefore(l,olnytext)
     }
 }
 
 function Run(str) {
 	window.setTimeout(str, 0)
 }
+
+clearConsole()
