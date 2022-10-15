@@ -14,7 +14,8 @@ function switchto(obj) {
     nowtab=obj
 }
 
-function Console(str) {
+function Console(str, save = 0) {
+    if(!save)
     tab3.innerHTML = ""
 	var tid = document.createElement("textarea")
 	tid.value = str
@@ -22,4 +23,16 @@ function Console(str) {
     OpenPos("输出到输出窗口", event.pageX-200,event.pageY)
 }
 
+function writetoConsole(list) {
+    tab3.innerHTML=""
+    for (var l of list) {
+        if (typeof (l) == 'string') {
+            l = document.createTextNode(l)
+        }
+        tab3.appendChild(l)
+    }
+}
 
+function Run(str) {
+	window.setTimeout(str, 0)
+}

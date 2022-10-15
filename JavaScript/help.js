@@ -1,6 +1,4 @@
-function Run(str){
-    window.setTimeout(str,0) 
-}
+
 
 mymenu_Son.select_funcs_list[2].push(function () {
 	switchto(main)

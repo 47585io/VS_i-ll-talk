@@ -1,0 +1,1989 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" name="viewport" content="initial-scale=1,maximum-scale=2,
+			minimum-scale=0.5,user-scalable=yes" />
+    <style>
+        * {
+            padding: 0%;
+            margin: 0%;
+            outline: 0;
+            border: 0;
+            color: #abb2bf;
+            background-color: rgb(28, 32, 37);
+            font-size: 10px;
+            font-weight: 400;
+            tab-size: 4;
+            font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+        }
+
+        *::selection {
+            background-color: rgba(62, 69, 87, 0.4);
+        }
+
+        textarea {
+            width: 100%;
+            height: 100%;
+            font-size: 10px;
+        }
+
+        #maind {
+            cursor: default;
+            position: absolute;
+            overflow: auto;
+            top: -1000px;
+            max-height: 40%;
+            max-width: 80%;
+            font-size: 15px;
+            z-index: 10;
+            padding: 7px;
+            background-color: #1e1f23 !important;
+        }
+
+        #maind * {
+            background-color: inherit;
+            font-size: 15px;
+        }
+
+        #main,
+        #tab2,
+        #tab3 {
+            counter-reset: mytitle 0;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            line-height: 22px;
+        }
+
+        #main,
+        #tab3 {
+            padding-left: 10px;
+            padding-right: 9px;
+            width: calc(100% - 19px);
+        }
+
+        #main * {
+            background-color: inherit;
+        }
+
+        #tab4 {
+            font-size: 10px;
+        }
+
+        #ball {
+            z-index: 10;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 3px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        #input {
+            position: absolute;
+            left: 0;
+            top: 0px;
+            font-size: 14px;
+            width: calc(100% - 41px);
+            height: 2000%;
+            opacity: 0.1;
+            padding-left: 41px;
+            filter: brightness(0);
+            caret-color: blue;
+        }
+
+        #output {
+            height: 2000%;
+            width: 100%;
+        }
+
+        a,
+        .T {
+            color: #61afef;
+            font-weight: 450;
+        }
+
+        .T[mytext=""] {
+            cursor: default;
+        }
+
+        li:not(.code li) {
+            color: #79c3a1;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        button {
+            background-color: coral;
+        }
+
+        .title {
+            font-size: 1.3em !important;
+            transition-duration: 0.75s;
+
+            font-weight: 450;
+        }
+
+        .title::before {
+            counter-reset: my_small_title 0;
+            /* content: counter(mytitle);*/
+            counter-increment: mytitle 1;
+            padding-right: 10px;
+            padding-left: 5px;
+        }
+
+        .small_title {
+            transition-duration: 0.75s;
+            font-size: 1.0em;
+            padding: 3px;
+            padding-left: 15px;
+        }
+
+        .small_title::before {
+            /*content: counter(mytitle)"."counter(my_small_title);
+	*/
+            counter-increment: my_small_title 1;
+            padding-left: 10px;
+            padding-right: 10px
+        }
+
+        .title:hover,
+        .small_title:hover {
+            filter: contrast(0.92);
+        }
+
+        .newp {
+            line-height: 22px;
+            font-size: 10px;
+
+        }
+
+        .code:not(#output) {
+            cursor: default;
+            font-weight: 400;
+            font-size: 15px;
+            background-color: rgb(35, 40, 46) !important;
+            overflow: auto;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            max-height: 80vh;
+            counter-reset: mycount 0;
+
+        }
+
+        .install {
+            opacity: 0;
+            transition-duration: 0.5s;
+            transition-delay: 0.25s;
+            position: relative;
+            top: -20px;
+            left: 88%;
+            line-height: 20px;
+            font-size: 14px;
+            width: 12%;
+            color: inherit;
+            background-color: gray !important;
+            filter: brightness(0.8);
+            border-radius: 3px;
+            vertical-align: middle;
+        }
+
+        .ther:hover .install {
+            opacity: 1;
+        }
+
+        .install:active {
+            filter: brightness(1.1);
+            transition-delay: 0s;
+        }
+
+        .code li::before {
+            display: inline-block;
+            width: 40px;
+            content: counter(mycount);
+            filter: brightness(0.5);
+            text-align: center;
+            padding-right: 2px;
+        }
+
+        .code li {
+            cursor: default;
+            display: block;
+
+            counter-increment: mycount 1;
+            color: #abb2bf;
+            font-size: medium;
+            font-weight: 400;
+            line-height: 23px;
+
+        }
+
+        .code li *,
+        .code * {
+            font-size: medium;
+        }
+
+        .code li:hover>* {
+            filter: contrast(0.82);
+        }
+
+        .code:not(.code_html, .code_css, .broken) li:hover>*:first-child {
+            filter: contrast(1);
+        }
+
+        .code li:hover {
+            filter: contrast(0.93);
+        }
+
+        .code li:hover::before {
+            color: #abb2bf;
+            filter: brightness(1.05);
+        }
+
+        .code li pre {
+            font-weight: 400;
+            letter-spacing: 0.1px;
+        }
+    </style>
+    <style>
+        .mark {
+            background-color: red;
+            border-radius: 10px;
+            width: 100%;
+            height: 50px;
+            position: absolute;
+            left: 0;
+            z-index: 10;
+            clip-path: circle(5px at 5px 10px);
+        }
+
+        .vscode {
+            clip-path: polygon(10% 25%,
+                    0 35%,
+                    75% 100%,
+                    100% 85%,
+                    100% 15%,
+                    75% 0,
+                    0 65%,
+                    10% 75%,
+                    75% 30%,
+                    75% 70%,
+                    10% 25%);
+            background-color: rgb(0, 117, 181);
+            width: 25px;
+            height: 25px;
+            border-radius: 5px;
+            box-shadow: 5px 5px 5px 5px rgb(0, 126, 205);
+            display: inline-block;
+        }
+
+        #menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 10;
+            height: 30px;
+            max-width: 100%;
+            overflow: hidden;
+            transition-duration: 0.75s;
+            transition-timing-function: ease-out;
+        }
+
+        select {
+            font-size: 15px;
+            transition-duration: 0.4s;
+            transition-timing-function: ease-out;
+            max-width: 7ch;
+            margin-top: 5px;
+        }
+
+        option:first-child {
+            display: none;
+        }
+
+        select:hover {
+            filter: contrast(0.8);
+            border-radius: 10px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div id="menu" isopen="1">
+        <button class="vscode" id="vscode"></button>
+        <select id="goto">
+            <option>转到</option>
+
+            <option>转到上一个Mark</option>
+            <option>转到下一个Mark</option>
+            <option>转到第一个Mark</option>
+            <option>转到最后的Mark</option>
+            <option>转到指定的Mark</option>
+            <option>转到页面开头</option>
+            <option>转到页面末尾</option>
+            <option disabled>添加一个Mark &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;仅双击</option>
+            <option disabled>删除一个Mark &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 仅长按</option>
+            <option>清除所有Mark</option>
+            <option>都不选</option>
+        </select>
+        <select id="edit">
+            <option>编辑</option>
+            <option>只读编辑器</option>
+            <option>只写编辑器</option>
+            <option>选择语言</option>
+            <option>放入一个文件到编辑器</option>
+        </select>
+        <select id="help">
+            <option>帮助</option>
+            <option>开始</option>
+            <option>速览帮助文档</option>
+            <option>运行编辑器的文本</option>
+            <option>打开输出窗口</option>
+
+        </select>
+
+    </div>
+
+    <div id="maind" ishover="0"></div>
+
+    <div id="tab2">
+        <pre class='code' id="output">
+        </pre>
+        <textarea id="input"></textarea>
+    </div>
+
+    <div id="tab3"></div>
+
+    <div id="main">
+        <br>
+        <!--1-->
+        <h1 class="title">愉快地开始</h1>
+        <p class="newp">
+            要实现JavaScript文件操作，必须先设置一个input元素，并把其type属性置为"file",让用户选择文件
+
+            【实例1】下例演示了:在用户选择一个文件后(input的value变化时)，将其输出, 您可以尝试着点击按扭查看效果
+
+        </p>
+        <div class="ther" truecode="writetoConsole(['$$'])">
+            <pre class="code broken" mark="html,0,5;js,5,9;html,9,12">
+< !DOCTYPE HTML>
+< html>
+    < body>
+        <input type="file" id="myfile">
+        <script>
+            var myfile = document.querySelector("#myfile")
+            myfile.onchange = function (event,) {
+                alert(this.value)
+            }
+        </script>
+    < /body>
+< /html>
+            </pre>
+        </div>
+
+        <div class="code">
+            运行结果:
+            <br><br>
+            <input type="file" id="myfile">
+        </div>
+
+        <!--2-->
+
+        <br><br>
+        为了方便用户在脚本中访问这些将要提交的文件, <br>HTML5新增了
+        <a class="T" mytext="<a>(FileList)</a><br>表示用户选择的文件列表
+	<br/>">FileList</a>
+        和<a class="T" mytext="<a>(File)</a><br>表示用户选择的文件列表中的文件对象
+	<br/><br /><li>name   文件名</li><li>lastModifiedDate    文件最后的修改时间</li>"> File </a>对象
+        <br><br>
+        【实例2】下面实例演示了如何使用FileList和File对象访问用户提交的文件名称列表。
+
+
+        <br><br>
+        <pre class="code broken" mark="html,0,6;js,6,14;html,14,16">
+
+            < body>
+                <input type="file" id="file" multiple>
+                <!--multiple 属性是 HTML5 中的新属性, 如果使用该属性，则字段可接受多个值-->
+                < /body>
+                    <script>
+
+                        var file = document.getElementById("file");
+                        file.onchange = function () {
+                            for (var i = 0; i < file.files.length; i++)
+                                console.log(file.files[i].name);
+                            //files 为 Filelist对象, files[i] 为 File对象
+                        };
+
+                    </script>
+        </pre>
+        <br>
+        <div class="code">运行结果:<br><br>
+            <input type="file" id="files" multiple>
+        </div>
+
+
+        <!--3-->
+        <br /><br />
+        <h1 class="title">Blob对象</h1>
+
+        HTML5的<a class="T" mytext="
+<a>(Blob)</a><br>用于存储二进制数据，还可以设置存储数据的MIME类型<br/><br />
+<li>
+size 表示一个Blob对象的字节长度
+</li><li>
+type 表示Blob的MIME类型，如果为未知类型，则返回一个空字符串</li>">
+            Blob </a>对象用于存储二进制数据，还可以设置存储数据的MIME类型，其他HTML5二进制对象继承Blob对象。
+        <br /><br />
+        <div class="code">
+            运行结果:<br /><br>
+            <input type="file" id="threeinput">
+        </div>
+
+    </div>
+    <script>
+        lastMs = 500
+            lastCount = 0
+            xms = 500
+
+            function calcMs(last, now, xms) {
+                if (last < now) {
+                    if (last + xms > now)
+                        return 1
+                    else
+                        return 0
+                }
+                else {
+                    if (1000 - last + now < xms)
+                        return 1
+                    else
+                        return 0
+                }
+            }
+
+            function nclick(n, func) {
+                let time = new Date()
+                let nowMs = time.getMilliseconds()
+                let y = calcMs(lastMs, nowMs, xms)
+                if (y) {
+                    if (lastCount + 1 == n) {
+                        func()
+                        lastMs = 500
+                        lastCount = 0
+                        return
+                    }
+                }
+                else {
+                    lastMs = 500
+                    lastCount = 0
+                }
+                lastCount++
+                lastMs = nowMs
+            }
+/*
+            例如:
+            
+            one=document.getElementById("one")
+            one.onclick=function(){
+                nclick(3,function(){
+                    alert("nclick")
+                })
+            }*/
+    </script>
+    <script>
+        class Menu {
+            menu = document.getElementById("menu")
+            chu() {
+                if (this.menu.getAttribute("isopen") == "1")
+                    this.Close()
+                else
+                    this.Open()
+            }
+            Open() {
+                this.menu.style.width = "auto"
+                this.menu.setAttribute("isopen", "1")
+            }
+            Close() {
+                this.menu.style.width = 30 + "px"
+                this.menu.style.height = 30 + "px"
+                this.menu.setAttribute("isopen", "0")
+            }
+        }
+
+
+        class menuson {
+            select_funcs_list = []
+            select_list = []
+            constructor(strlist) {
+                for (var str of strlist) {
+                    this.select_list.push(document.getElementById(str))
+                    this.select_funcs_list.push([])
+                }
+            }
+        }
+
+        var mymenu_Son = new menuson(['goto', 'edit', 'help'])
+
+        function bind_menuson() {
+            for (let i = 0; i < mymenu_Son.select_list.length; i++) {
+                mymenu_Son.select_list[i].onchange = function () {
+                    if (
+                        mymenu_Son.select_funcs_list[i][
+                        mymenu_Son.select_list[i].selectedIndex - 1
+                        ]
+                    )
+                        mymenu_Son.select_funcs_list[i][
+                            mymenu_Son.select_list[i].selectedIndex - 1
+                        ]()
+                    mymenu_Son.select_list[i].selectedIndex = 0
+                }
+            }
+        }
+
+        bind_menuson()
+
+
+
+        var vs = document.getElementById("vscode")
+        var mymenu = new Menu()
+        vs.onclick = function () {
+            mymenu.chu()
+        }
+        vs.oncontextmenu = function () {
+            mymenu.chu()
+        }
+        vs.ondblclick = function () {
+            mymenu.chu()
+        }
+        vs.onmouseover = function () {
+            mymenu.chu()
+        }
+
+
+
+    </script>
+    <script>
+        var main = document.getElementById("main")
+        var tab2 = document.getElementById("tab2")
+        var tab3 = document.getElementById("tab3")
+
+        tab3.style.display = "none"
+        tab2.style.display = "none"
+        var nowtab = main
+
+        function switchto(obj) {
+            if (obj == nowtab)
+                return
+            obj.style.display = "block"
+            nowtab.style.display = "none"
+            nowtab = obj
+        }
+
+        function Console(str, save = 0) {
+            if (!save)
+                tab3.innerHTML = ""
+            var tid = document.createElement("textarea")
+            tid.value = str
+            tab3.appendChild(tid)
+            OpenPos("输出到输出窗口", event.pageX - 200, event.pageY)
+        }
+
+        function writetoConsole(list) {
+            tab3.innerHTML = ""
+            for (var l of list) {
+                if (typeof (l) == 'string') {
+                    l = document.createTextNode(l)
+                }
+                tab3.appendChild(l)
+            }
+        }
+
+        function Run(str) {
+            window.setTimeout(str, 0)
+        }
+
+    </script>
+    <script>
+        var maind = document.getElementById("maind")
+
+        function to() {
+            var allT = document.getElementsByClassName("T")
+            for (var aT of allT) {
+                aT.onmouseover = function () { Open(this) };
+            }
+            maind.onmouseover = function () { this.setAttribute("ishover", "1") }
+            maind.onmouseout = function () {
+                this.setAttribute("ishover", "0")
+                Close()
+            }
+        }
+
+
+        class pos {
+            x = 0
+            y = 0
+        }
+
+        function Open(obj) {
+            if (obj.getAttribute("mytext") == "")
+                return
+            maind.innerHTML = obj.getAttribute("mytext")
+            to()
+            var mypos = new pos()
+            mypos.x = event.pageX
+            mypos.y = event.pageY
+            width = 0
+            if (width > window.innerWidth) {
+                maind.style.left = window.innerWidth - maind.innerHTML.length * 20 + "px"
+            }
+            else
+                maind.style.left = mypos.x + "px"
+            maind.style.top = mypos.y + "px"
+            maind.style.color = obj.style.color
+            if (obj.wantcolor)
+                maind.style.color = obj.getAttribute("wantcolor")
+
+        }
+        function Close() {
+            maind.style.top = "-1000px"
+        }
+
+        function OpenPos(str, x, y) {
+            maind.style.top = y + "px"
+            maind.style.left = x + "px"
+            maind.innerHTML = str
+        }
+
+
+    </script>
+    <script>
+        function formatAllP() {
+            AllP = document.getElementsByClassName("newp")
+            for (P of AllP) {
+                var text = P.innerHTML
+                var k = 0
+                for (var i = 0; i < text.length; i++)
+                    if (text[i] == "\n") {
+                        text =
+                            text.substring(0, i) +
+                            "<br/>" +
+                            text.substring(i + 1, text.length + k)
+                        k += 3
+                    } else if (text[i] == " ") {
+                        text =
+                            text.substring(0, i) +
+                            "&nbsp;" +
+                            text.substring(i + 1, text.length + k)
+                        k += 1
+                    }
+                P.innerHTML = text
+            }
+        }
+
+
+        function initInstall() {
+            var Allther = document.getElementsByClassName("ther")
+            for (var t of Allther) {
+                var but = document.createElement("button")
+                but.className = "install"
+                but.appendChild(document.createTextNode("复制"))
+                t.appendChild(but)
+            }
+        }
+        function bindInstall() {
+            var Allinstall = document.getElementsByClassName("install")
+            for (var ins of Allinstall) {
+                ins.onclick = function () {
+                    Console(this.parentNode.innerHTML)
+                }
+                ins.ondblclick = function () {
+                    var str = this.parentNode.getAttribute("truecode")
+                    Run(str)
+                }
+                ins.onmouseout = function () {
+                    Close()
+                }
+            }
+        }
+
+        formatAllP()
+        initInstall()
+        bindInstall()
+
+
+    </script>
+    <script>
+        var color = {
+            red: "#b85653",
+            blue: "#61afef",
+            yellow: "#d4ba76",
+            green: "#98c379",
+            zi: "#b876d4",
+            brown: "#cd9861",
+            bgreen: "#57adbb",
+            white: "#abb2bf",
+            grey: "grey",
+            white: "#ffffff",
+        }
+
+        var value = 0
+
+        class Draw {
+            main = document.getElementById("main")
+            output = document.getElementById("output")
+            input = document.getElementById("input")
+            line_List = []
+            Text_List = []
+            word_list = []
+            Obj_List = []
+            Li_Obj_List = []
+            src_list = []
+            now_obj
+            now_li_obj
+            laugue = "code"
+
+            constructor() {
+                this.line_List = []
+                this.Text_List = []
+                this.word_list = []
+                this.Obj_List = []
+                this.Li_Obj_List = []
+            }
+            endsWith(str, src) {
+                for (var i = src.length - 1; i >= 0; i--)
+                    if (src.substring(i, src.length) == str) return 1
+                return 0
+            }
+            getTexts() {
+                //olny get this laugue text
+                this.Obj_List = document.getElementsByClassName(this.laugue)
+                for (var i = this.Text_List.length; i < this.Obj_List.length; i++) {
+                    this.Text_List.push(this.Obj_List[i].innerHTML)
+                    this.Obj_List[i].innerHTML = ""
+                }
+                //clear obj text
+            }
+            getLines(text) {
+                //from text get lines
+                var str = ""
+                value++
+                //the value is  is global,
+                //so it can be used in any subclass without duplicate name
+                this.line_List = text.split("\n")
+                for (var line of this.line_List)
+                    str += '<li class="' + value + '"></li>'
+                // In order to distinguish the li groups in each label object,
+                //values with different values are used for naming
+                this.now_obj.innerHTML = str
+                //clear now_obj, and add many li(line) for it
+                this.Li_Obj_List = document.getElementsByClassName(String(value))
+                //then let us get them
+            }
+            getLines2(text) {
+                //from text get lines
+                var str = ""
+                value++
+                //the value is  is global,
+                //so it can be used in any subclass without duplicate name
+                this.line_List = text.split("\n")
+                for (var line of this.line_List)
+                    str += '<li class="' + value + '"></li>'
+                // In order to distinguish the li groups in each label object,
+                //values with different values are used for naming
+                this.now_obj.innerHTML += str
+                //clear now_obj, and add many li(line) for it
+                this.Li_Obj_List = document.getElementsByClassName(String(value))
+                //then let us get them
+            }
+            Laugue_Split(line) {
+                return line
+            }
+            getWords(line) {
+                //from line get words
+                var str = ""
+                for (var i = 0; line[i] == " " || line[i] == "\t"; i++) {
+                    if (line[i] == " ") str += "&nbsp;"
+                    else if (line[i] == "\t") str += "        "
+                }
+                //retain ' ' on head
+                var tmp = this.Laugue_Split(line)
+                //please use your idea add' '，then i can spilt it
+                this.word_list = tmp.split(/[ 	]/)
+                this.word_list.unshift(str)
+                for (var t of this.word_list) this.src_list.push(t)
+            }
+
+            Run() {
+                //→get All Text With the specified class name
+                //→Take one from the text list each time and split it into a row list
+                //→Split one line at a time into a word list
+                //→Find the word with the specified mark from the word list and color it
+                this.getTexts()
+                for (var i = 0; i < this.Obj_List.length; i++) {
+                    this.now_obj = this.Obj_List[i]
+                    this.getLines(this.Text_List[i])
+                    for (var j = 0; j < this.Li_Obj_List.length; j++) {
+                        this.getWords(this.line_List[j])
+                        this.now_li_obj = this.Li_Obj_List[j]
+                        this.check()
+                    }
+                }
+            }
+            Run_Text(i = -1) {
+                if (i == -1) {
+                    this.now_obj = this.output
+                    this.getLines(this.input.value)
+                } else {
+                    this.getTexts()
+                    this.now_obj = this.Obj_List[i]
+                    this.getLines(this.Text_List[i])
+                }
+                for (var j = 0; j < this.Li_Obj_List.length; j++) {
+                    this.getWords(this.line_List[j])
+                    this.now_li_obj = this.Li_Obj_List[j]
+                    this.check()
+                }
+            }
+
+            add(str) {
+                this.main.innerHTML += '<pre class="code code_js">' + str + "</pre>"
+                this.Run_Text(this.Text_List.length)
+                to()
+            }
+            reset(i, str) {
+                this.Text_List[i] = str
+                this.Run_Text(i)
+                to()
+            }
+
+            insert(obj, text) {
+                //let me insert a text to obj and color for you
+                this.now_obj = obj
+                this.getLines2(text)
+                for (var j = 0; j < this.Li_Obj_List.length; j++) {
+                    this.getWords(this.line_List[j])
+                    this.now_li_obj = this.Li_Obj_List[j]
+                    this.check()
+                }
+            }
+
+            draw(word, color_index = "white", text = "", yes = 0) {
+                //Returns a formatted colored string for insertion
+                if (yes == 1)
+                    var str =
+                        '<pre style="display:inline;color: ' +
+                        color[color_index] +
+                        ';text-decoration:line-through;"' +
+                        'class="T" ' +
+                        'wantcolor="' +
+                        color[color_index] +
+                        '"' +
+                        "mytext='" +
+                        text +
+                        "'>" +
+                        word +
+                        "</pre>"
+                else
+                    var str =
+                        '<pre style="display:inline;color: ' +
+                        color[color_index] +
+                        '"  wantcolor="' +
+                        color[color_index] +
+                        '"class="T"' +
+                        " mytext='" +
+                        text +
+                        "'>" +
+                        word +
+                        "</pre>"
+                return str
+            }
+            find_a(char, color, text = "") {
+                //Find text in lines in word and quickly color
+                for (var i = 0; i < this.word_list.length; i++) {
+                    for (var c of char)
+                        if (
+                            this.word_list[i] == c ||
+                            this.word_list[i].indexOf(c) != -1
+                        )
+                            this.word_list[i] = this.draw(
+                                this.word_list[i],
+                                color,
+                                text
+                            )
+                }
+            }
+
+            find() { }
+            //Develop more detailed dyeing methods
+
+            check() {
+                //Check and reorganize
+                var str = ""
+                var word = ""
+                this.find()
+                //Provide a method to process the words in each line of text,
+                //and then I will combine the words into lines and give them to li
+                for (var i = 0; i < this.word_list.length; i++) {
+                    if (
+                        i == 0 ||
+                        this.word_list[i].indexOf(".") != -1 ||
+                        this.word_list[i].indexOf("[") != -1 ||
+                        (
+                            (i < this.word_list.length - 1 &&
+                                this.word_list[i + 1] == ")") ||
+                            this.word_list[i + 1] == ";")
+                        ||
+                        (i < this.word_list.length - 1 &&
+                            this.word_list[i + 1].indexOf("[") != -1) ||
+                        (i < this.word_list.length - 1 &&
+                            this.word_list[i + 1].indexOf("]") != -1) ||
+                        (i < this.word_list.length - 1 &&
+                            this.word_list[i + 1].indexOf("{") != -1) ||
+                        (i < this.word_list.length - 1 &&
+                            this.word_list[i + 1].indexOf("}") != -1)
+                    )
+                        str += this.word_list[i]
+                    else str += this.word_list[i] + "&nbsp;"
+                }
+                this.now_li_obj.innerHTML = str
+            }
+        }
+
+        class Draw_js extends Draw {
+            virible_list = []
+            defined_virible = [
+                "null",
+                "true",
+                "false",
+                "undefined",
+                "arguments",
+                "Boolean",
+                "Array",
+                "Date",
+                "Object",
+                "eval",
+                "Error",
+                "EvalError",
+                "Function",
+                "JOSN",
+                "Infinity",
+                "NaN",
+                "Number",
+                "RangeError",
+                "ReferenceError",
+                "String",
+                "SyntaxError",
+                "TypeError",
+                "URIError",
+            ]
+            keyword = [
+                "function",
+                "var",
+                "else if",
+                "if",
+                "else",
+                "do",
+                "while",
+                "for",
+                "in",
+                "of",
+                "break",
+                "countine",
+                "let",
+                "const",
+                "static",
+                "class",
+                "extends",
+                "switch",
+                "case",
+                "return",
+                "try",
+                "catch",
+                "throw",
+                "debuger",
+                "use strict",
+                "new",
+                "delete",
+            ]
+            class_obj_list = [
+                "window",
+                "document",
+                "History",
+                "Url",
+                "Number",
+                "String",
+                "Array",
+                "Date",
+                "Math",
+                "RegExp",
+                "Element",
+                "attributes",
+                "Navigator",
+                "Screen",
+                "Location",
+            ]
+            constructor() {
+                super()
+                this.laugue = "code_js"
+            }
+
+            Laugue_Split(line) {
+                var tmp = line
+                var tmp2 = line
+                var k = 0
+                for (var i = 0; i < tmp2.length; i++) {
+                    if (tmp2[i] == "." || tmp2[i] == "(" || tmp2[i] == ",") {
+                        tmp =
+                            tmp2.substring(0, i + 1) +
+                            " " +
+                            tmp2.substring(i + 1, line.length + k)
+                        tmp2 = tmp
+                        i++
+                        k++
+                    } else if (
+                        tmp2[i] == ")" ||
+                        tmp2[i] == "]" ||
+                        tmp2[i] == "}" ||
+                        tmp2[i] == "{" ||
+                        tmp2[i] == ";"
+                    ) {
+                        tmp =
+                            tmp2.substring(0, i) +
+                            " " +
+                            tmp2.substring(i, line.length + k)
+                        tmp2 = tmp
+                        i++
+                        k++
+                    } else if (tmp2[i] == '"') {
+                        i++
+                        for (; tmp2[i] != '"' && i < tmp2.length; i++) continue
+                    } else if (tmp2[i] == "'") {
+                        i++
+                        for (; tmp2[i] != "'" && i < tmp2.length; i++) continue
+                    } else if (
+                        tmp2[i] == "=" ||
+                        tmp2[i] == "+" ||
+                        tmp2[i] == "-" ||
+                        tmp2[i] == "*" ||
+                        tmp2[i] == "&&" ||
+                        tmp2[i] == "||" ||
+                        tmp2[i] == "[" ||
+                        tmp2[i] == ":"
+                    ) {
+                        if (
+                            tmp2[i - 1] != " " &&
+                            tmp2[i + 1] != " " &&
+                            tmp2[i - 1] != tmp2[i] &&
+                            tmp2[i + 1] != tmp2[i]
+                        ) {
+                            tmp =
+                                tmp2.substring(0, i) +
+                                " " +
+                                tmp2[i] +
+                                " " +
+                                tmp2.substring(i + 1, line.length + k)
+                            tmp2 = tmp
+                            i += 2
+                            k += 2
+                        } else if (
+                            tmp2[i - 1] != " " &&
+                            tmp2[i + 1] == " " &&
+                            tmp2[i - 1] != tmp2[i]
+                        ) {
+                            tmp =
+                                tmp2.substring(0, i) +
+                                " " +
+                                tmp2[i] +
+                                tmp2.substring(i + 1, line.length + k)
+                            tmp2 = tmp
+                            i += 1
+                            k += 1
+                        } else if (
+                            tmp2[i - 1] == " " &&
+                            tmp2[i + 1] != " " &&
+                            tmp2[i + 1] != tmp2[i]
+                        ) {
+                            tmp =
+                                tmp2.substring(0, i) +
+                                tmp2[i] +
+                                " " +
+                                tmp2.substring(i + 1, line.length + k)
+                            tmp2 = tmp
+                            i += 1
+                            k += 1
+                        }
+                    }
+                }
+                return tmp
+            }
+            find() {
+                this.find_a(
+                    [
+                        "=",
+                        "+",
+                        "-",
+                        "*",
+                        "/",
+                        "&lt;",
+                        "&gt;",
+                        "&",
+                        "|",
+                        "^",
+                        "!",
+                        "[",
+                        "]",
+                    ],
+                    "bgreen"
+                )
+                this.find_a(["{", "}"], "zi")
+                this.find_a(['"', "'"], "green")
+                this.find_a([".", ":"], "yellow")
+                this.find_a([","], "red")
+                this.find_a(["(", ")"], "blue")
+            }
+
+            find_a(char, color) {
+                //find
+                for (var i = 0; i < this.word_list.length; i++) {
+                    try {
+                        if (this.word_list[i].indexOf("<pre") != -1) continue
+                        if (this.word_list[i].indexOf("//") != -1) {
+                            for (; i < this.word_list.length; i++)
+                                this.word_list[i] = this.draw(this.word_list[i], "grey")
+                            return
+                        } else if (this.word_list[i].indexOf("~$") != -1) {
+                            this.word_list[i] =
+                                this.word_list[i].substring(
+                                    0,
+                                    this.word_list[i].indexOf("~$")
+                                ) +
+                                this.word_list[i].substring(
+                                    this.word_list[i].indexOf("~$") + 2,
+                                    this.word_list[i].length
+                                )
+                            this.word_list[i] = this.draw(
+                                this.word_list[i],
+                                "white",
+                                "ERROR!!!",
+                                1
+                            )
+                            this.now_li_obj.style.background = "pink"
+                        } else if (this.keyword.indexOf(this.word_list[i]) != -1) {
+                            if (this.word_list[i] == "class" && i < this.word_list.length - 1) {
+                                this.class_obj_list.push(
+                                    this.word_list[i + 1])
+
+                                this.word_list[i + 1] = this.draw(
+                                    this.word_list[i + 1],
+                                    "yellow",
+                                    "class: " + this.word_list[i + 1]
+                                )
+                            }
+                            this.word_list[i] = this.draw(this.word_list[i], "zi")
+                        } else if (this.word_list[i + 1] == "=") {
+                            this.virible_list.push(this.word_list[i])
+                            this.word_list[i + 1] = this.draw(
+                                this.word_list[i + 1],
+                                "bgreen"
+                            )
+                            this.word_list[i] = this.draw(
+                                this.word_list[i],
+                                "red",
+                                "virible: " + this.word_list[i]
+                            )
+                        } else if (this.virible_list.indexOf(this.word_list[i]) != -1)
+                            this.word_list[i] = this.draw(
+                                this.word_list[i],
+                                "red",
+                                "virible: " + this.word_list[i]
+                            )
+                        else if (this.class_obj_list.indexOf(this.word_list[i]) != -1)
+                            this.word_list[i] = this.draw(
+                                this.word_list[i],
+                                "yellow",
+                                "class: " + this.word_list[i]
+                            )
+                        else if (
+                            !isNaN(Number(this.word_list[i])) ||
+                            this.defined_virible.indexOf(this.word_list[i]) != -1
+                        )
+                            this.word_list[i] = this.draw(this.word_list[i], "brown")
+                        else {
+                            for (var c of char) {
+                                if (
+                                    this.word_list[i] == c ||
+                                    this.word_list[i].indexOf(c) != -1
+                                )
+                                    if (c == ".") {
+                                        this.word_list[i] = this.draw(
+                                            this.word_list[i],
+                                            color,
+                                            "object: " + this.word_list[i]
+                                        )
+
+                                    }
+                                    else if (c == "(") {
+                                        this.word_list[i] = this.draw(
+                                            this.word_list[i],
+                                            color,
+                                            "function :  " + this.word_list[i] + "...)"
+                                        )
+                                    } else if (c == ",") {
+                                        this.virible_list.push(
+                                            this.word_list[i].substring(
+                                                0,
+                                                this.word_list[i].length - 1
+                                            )
+                                        )
+                                        this.word_list[i] = this.draw(
+                                            this.word_list[i],
+                                            "red",
+                                            "virible: " + this.word_list[i]
+                                        )
+                                    } else
+                                        this.word_list[i] = this.draw(
+                                            this.word_list[i],
+                                            color
+                                        )
+                            }
+                        }
+                    }
+                    catch (a) {
+                        this.word_list[i] = this.draw(
+                            this.word_list[i],
+                            "white",
+                            "ERROR!!!",
+                            1
+                        )
+                    }
+                }
+
+            }
+        }
+
+        class Draw_html extends Draw {
+            constructor() {
+                super()
+                this.laugue = "code_html"
+            }
+            Laugue_Split(line) {
+                var tmp = line
+                var tmp2 = line
+                var k = 0
+                for (var i = 0; i < tmp2.length; i++) {
+                    if (tmp2[i] == ">") {
+                        tmp =
+                            tmp2.substring(0, i) +
+                            " &gt; " +
+                            tmp2.substring(i + 1, line.length + k)
+                        i += 6
+                        k += 6
+                        tmp2 = tmp
+                    } else if (tmp2[i] == "<") {
+                        tmp =
+                            tmp2.substring(0, i) +
+                            " &lt;" +
+                            tmp2.substring(i + 1, line.length + k)
+                        tmp2 = tmp
+                        i += 5
+                        k += 5
+                    } else if (tmp2[i] == "=") {
+                        if (tmp2[i - 1] != " " && tmp2[i + 1] != " ") {
+                            tmp =
+                                tmp2.substring(0, i) +
+                                "= " +
+                                tmp2.substring(i + 1, line.length + k)
+                            tmp2 = tmp
+                            i += 2
+                            k += 2
+                        } else if (tmp2[i - 1] != " " && tmp2[i + 1] == " ") {
+                            tmp =
+                                tmp2.substring(0, i) +
+                                "= " +
+                                tmp2.substring(i + 1, line.length + k)
+                            tmp2 = tmp
+                            i += 2
+                            k += 2
+                        } else if (tmp2[i] == '"') {
+                            i++
+                            for (; i < tmp2.length; i++)
+                                if (tmp2[i] == '"') {
+                                    tmp =
+                                        tmp2.substring(0, i + 1) +
+                                        " " +
+                                        tmp2.substring(i + 1, line.length + k)
+                                    tmp2 = tmp
+                                    i += 1
+                                    k += 1
+                                    break
+                                }
+                        }
+                    }
+                }
+                return tmp
+            }
+
+            find() {
+                var re = 0
+                for (var i = 0; i < this.word_list.length; i++) {
+                    try {
+                        re = this.find_a(["&lt;", "&gt;"], "red", i, "Tag")
+                        re = this.find_a(["="], "brown", i, "Attribute")
+                        re = this.find_a(['"', '"'], "green", i)
+                    }
+                    catch (a) {
+                        this.word_list[i] = this.draw(this.word_list[i], "white", "ERROR", 1)
+                    }
+                }
+            }
+            find_a(char, color, i, text = "") {
+                if (this.word_list[i].indexOf("<pre") != -1) return
+                if (this.word_list[i].startsWith("&lt;!--")) {
+                    for (; i < this.word_list.length; i++) {
+                        this.word_list[i] = this.draw(this.word_list[i], "grey")
+                    }
+                } else if (this.word_list[i].indexOf("~$") != -1) {
+                    this.word_list[i] =
+                        this.word_list[i].substring(
+                            0,
+                            this.word_list[i].indexOf("~$")
+                        ) +
+                        this.word_list[i].substring(
+                            this.word_list[i].indexOf("~$") + 2,
+                            this.word_list[i].length
+                        )
+                    this.word_list[i] = this.draw(
+                        this.word_list[i],
+                        "white",
+                        "ERROR!!!",
+                        1
+                    )
+                    this.now_li_obj.style.background = "pink"
+                } else {
+                    for (var c of char)
+                        if (
+                            this.word_list[i] == c ||
+                            this.word_list[i].startsWith(c) ||
+                            this.endsWith(c, this.word_list[i])
+                        ) {
+                            if (c == "=")
+                                this.word_list[i] = this.draw(
+                                    this.word_list[i],
+                                    color,
+                                    text + ": " + this.word_list[i]
+                                )
+                            else if (c == '"')
+                                this.word_list[i] = this.draw(this.word_list[i], color)
+                            else
+                                this.word_list[i] = this.draw(
+                                    this.word_list[i],
+                                    color,
+                                    text +
+                                    ": " +
+                                    this.word_list[i].substring(
+                                        4,
+                                        this.word_list[i].length
+                                    )
+                                )
+                        }
+                }
+            }
+        }
+
+        class Draw_css extends Draw {
+            to_split = [".", "#", ":", '"', ";", "{", "!", "]", "[", "/", ")"]
+            first_line = 0
+            is_kong = 0
+            tag_lib = [
+                "*",
+                "html",
+                "body",
+                "head",
+                "title",
+                "a",
+                "img",
+                "audio",
+                "input",
+                "b",
+                "sup",
+                "i",
+                "small",
+                "font",
+                "em",
+                "strong",
+                "sub",
+                "ins",
+                "del",
+                "code",
+                "kbd",
+                "samp",
+                "var",
+                "pre",
+                "abbr",
+                "address",
+                "bdo",
+                "blockquote",
+                "cite",
+                "q",
+                "dfn",
+                "p",
+                "div",
+                "ul",
+                "li",
+                "ol",
+                "dl",
+                "dt",
+                "dd",
+                "hr",
+                "br",
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6",
+                "main",
+                "xmp",
+                "style",
+                "script",
+                "link",
+                "textarea",
+                "button",
+                "select",
+                "option",
+                "optgroup",
+                "picture",
+                "source",
+                "map",
+                "area",
+                "table",
+                "tr",
+                "th",
+                "td",
+                "caption",
+                "from",
+                "label",
+                "fieldset",
+                "legend",
+                "datalist",
+                "keygen",
+                "output",
+                "span",
+                "frame",
+                "iframe",
+                "object",
+                "embed",
+                "marguee",
+                "canvas",
+                "video",
+                "base",
+                "meta",
+                "details",
+                "summary",
+                "mark",
+                "noscript",
+                "figure",
+                "svg",
+                "circle",
+                "line",
+                "polyline",
+                "rect",
+                "ellipse",
+                "polygon",
+                "path",
+                "text",
+                "use",
+                "g",
+                "defs",
+                "pattern",
+                "animate",
+                "image",
+                "animateTransform",
+            ]
+            constructor() {
+                super()
+                this.laugue = "code_css"
+            }
+            isTag(word) {
+                var word_list = word.split(/[ 	]/)
+                for (var w of word_list) if (this.tag_lib.indexOf(w) != -1) return 1
+                return 0
+            }
+            isNumber(word) {
+                if (!isNaN(Number(word[0]))) return 1
+
+                return 0
+            }
+            getWords(line) {
+                this.word_list = []
+                var str = line
+
+                var last_index = 0
+                for (var i = 0; i < str.length; i++) {
+                    if (!isNaN(Number(str[i])) || this.to_split.indexOf(str[i]) != -1) {
+                        this.word_list.push(str.substring(last_index, i))
+                        last_index = i
+                    }
+                }
+                this.word_list.push(str.substring(last_index, str.length))
+            }
+            find_a(char, color, i, text = "") {
+                //Find text in lines in word and quickly color
+                if (this.word_list[i].indexOf("<pre") != -1) return
+                if (this.word_list[i].startsWith("/*")) {
+                    for (; i < this.word_list.length; i++) {
+                        this.word_list[i] = this.draw(this.word_list[i], "grey")
+                    }
+                } else if (this.word_list[i].indexOf("~$") != -1) {
+                    this.word_list[i] =
+                        this.word_list[i].substring(
+                            0,
+                            this.word_list[i].indexOf("~$")
+                        ) +
+                        this.word_list[i].substring(
+                            this.word_list[i].indexOf("~$") + 2,
+                            this.word_list[i].length
+                        )
+                    this.word_list[i] = this.draw(
+                        this.word_list[i],
+                        "white",
+                        "ERROR!!!",
+                        1
+                    )
+                    this.now_li_obj.style.background = "pink"
+                } else if (this.isTag(this.word_list[i]))
+                    this.word_list[i] = this.draw(
+                        this.word_list[i],
+                        "red",
+                        "Tag: " + this.word
+                    )
+                else if (
+                    this.first_line == 0 &&
+                    this.word_list.length - 1 > i &&
+                    this.word_list[i + 1].indexOf(":") != -1
+                )
+                    this.word_list[i] = this.draw(
+                        this.word_list[i],
+                        "brown",
+                        "Attribute: " + this.word
+                    )
+                else
+                    for (var c of char) {
+                        if (
+                            this.word_list[i] == c ||
+                            this.word_list[i].indexOf(c) != -1
+                        ) {
+                            if (text != "")
+                                this.word_list[i] = this.draw(
+                                    this.word_list[i],
+                                    color,
+                                    text + this.word
+                                )
+                            else {
+                                this.word_list[i] = this.draw(this.word_list[i], color)
+                            }
+                        }
+                    }
+            }
+            find() {
+                for (var i = 0; i < this.word_list.length; i++) {
+                    this.word = this.word_list[i]
+                    try {
+                        if (this.word_list.indexOf(";") == -1) {
+                            //first line
+                            this.first_line = 1
+                            this.find_a(["#"], "blue", i, "id: ")
+                            this.find_a(["."], "yellow", i, "class ")
+                            this.find_a([":", "::"], "bgreen", i, "Pseudo ")
+                            this.find_a(["["], "brown", i, "Attribute: ")
+                            this.find_a(["]"], "brown", i)
+                        } else {
+                            //other
+                            this.first_line = 0
+                            this.find_a([":"], "brown", i)
+                            this.find_a(["(", ")"], "bgreen", i, "func: ")
+                        }
+                        this.find_a(["@", "}", "{", "!"], "zi", i)
+                        this.find_a(['"'], "green", i)
+                    } catch (a) {
+                        this.word_list[i] = this.draw(
+                            this.word_list[i],
+                            "white",
+                            "ERROR",
+                            1
+                        )
+                    }
+                }
+            }
+            check() {
+                //Check and reorganize
+                var str = ""
+                var word = ""
+                this.find()
+                //Provide a method to process the words in each line of text,
+                //and then I will combine the words into lines and give them to li
+                for (word of this.word_list) str += word
+                this.now_li_obj.innerHTML = str
+            }
+        }
+
+        class Draw_py extends Draw_js {
+            keyword = [
+                "class",
+                "def",
+                "lambda",
+                "for",
+                "in",
+                "while",
+                "if",
+                "elif",
+                "else",
+                "try",
+                "except",
+            ]
+            defined_virible = ["None"]
+            class_obj_list = [
+                "list",
+                "tuple",
+                "dict",
+                "set",
+                "int",
+                "float",
+                "str",
+                "repr",
+                "double",
+                "Exception",
+            ]
+            constructor() {
+                super()
+                this.laugue = "code_py"
+            }
+        }
+
+
+        var mydraw_text = new Draw()
+        var mydraw_js = new Draw_js()
+        mydraw_js.Run()
+        var mydraw_html = new Draw_html()
+        mydraw_html.Run()
+        var mydraw_css = new Draw_css()
+        mydraw_css.Run()
+        var mydraw_py = new Draw_py()
+        mydraw_py.Run()
+
+        function Draw_broken(mark, Laugue_list, Laugue_obj_list) {
+            function splitMark(str) {
+                var result = []
+                var all = str.split(";")
+                for (a of all) result.push(a.split(","))
+                return result
+            }
+            function rangeListToStr(list, start, end) {
+                var endstr = ""
+                for (var i = start; i < end; i++) {
+                    if (i == end - 1) endstr += list[i]
+                    else endstr += list[i] + "\n"
+                    //最后一行总是多出一个'\n', 所以总会空出一行
+                }
+                return endstr
+            }
+
+            var broken = document.getElementsByClassName("broken")
+            for (var bor of broken) {
+                var paragraph = bor.getAttribute(mark)
+                var result = splitMark(paragraph)
+                var line_List = bor.innerHTML.split("\n")
+                src.push(bor.innerHTML)
+                bor.innerHTML = ""
+                for (re of result) {
+                    for (var i = 0; i < Laugue_obj_list.length; i++) {
+                        if (re[0] == Laugue_list[i]) {
+                            var endstr = rangeListToStr(
+                                line_List,
+                                Number(re[1]),
+                                Number(re[2])
+                            )
+                            Laugue_obj_list[i].insert(bor, endstr)
+
+                            break
+                        }
+                    }
+                }
+            }
+        }
+        var src = []
+        Draw_broken("mark", ["js", "css", "html"], [mydraw_js, mydraw_css, mydraw_html])
+
+        to()
+
+
+    </script>
+    <script>
+        class Mark_Stack {
+            Stack = []
+            index = -1
+            go(i = -666) {
+                if (i != -666) {
+                    this.index = i
+                    return this.Stack[i]
+                }
+                else if (this.index < this.Stack.length - 1 && this.Stack.length > 0) {
+                    this.index++
+                    return this.Stack[this.index]
+                }
+            }
+            retu(i = -666) {
+                if ((i != -666)) {
+                    this.index = i
+                    return this.Stack[i]
+                }
+                else if (this.index > 0 && this.Stack.length > 0) {
+                    this.index--
+                    return this.Stack[this.index]
+                }
+            }
+
+            draw() {
+                var tmp = document.createElement("div")
+                tmp.className = "mark"
+                document.body.appendChild(tmp)
+                return tmp
+            }
+            addMark(y = null) {
+                var tmp = this.draw()
+                if (y)
+                    tmp.style.top = y + "px"
+                else
+                    tmp.style.top = event.pageY + "px"
+                this.Stack.push(tmp)
+            }
+            DelMark(y = null) {
+                if (!y) {
+                    var i = this.Stack.length - 1
+                    document.body.removeChild(this.Stack[i])
+                    this.Stack.splice(i, 1)
+                }
+                for (var i = 0; i < this.Stack.length; i++) {
+                    var top = Number(this.Stack[i].style.top.substring(0, this.Stack[i].style.top.length - 2))
+                    if (top < y + 20 && top > y - 40) {
+                        document.body.removeChild(this.Stack[i])
+                        this.Stack.splice(i, 1)
+                    }
+                }
+                if (this.index > -1)
+                    this.index--
+            }
+            clear() {
+                for (; this.Stack.length > 0;) {
+                    document.body.removeChild(this.Stack[this.Stack.length - 1])
+                    this.Stack.splice(this.Stack.length - 1, 1)
+                }
+                this.index = -1
+            }
+        }
+
+        var myMark = new Mark_Stack()
+        document.body.ondblclick = function () { myMark.addMark(event.pageY) }
+        document.body.oncontextmenu = function () { myMark.DelMark(event.pageY) }
+
+
+        function bindMark() {
+            mymenu_Son.select_funcs_list[0].push(function () {
+                var tmp = myMark.retu()
+                if (!tmp) return
+                var top = Number(tmp.style.top.substring(0, tmp.style.top.length - 2))
+                window.scrollTo(0, top)
+            })
+            mymenu_Son.select_funcs_list[0].push(function () {
+                var tmp = myMark.go()
+                if (!tmp) return
+                var top = Number(
+                    tmp.style.top.substring(0, tmp.style.top.length - 2)
+                )
+                window.scrollTo(0, top)
+            })
+            mymenu_Son.select_funcs_list[0].push(function () {
+                var tmp = myMark.go(0)
+                if (!tmp) return
+                var top = Number(
+                    tmp.style.top.substring(0, tmp.style.top.length - 2)
+                )
+                window.scrollTo(0, top)
+            })
+            mymenu_Son.select_funcs_list[0].push(function () {
+                var tmp = myMark.go(myMark.Stack.length - 1)
+                if (!tmp) return
+                var top = Number(tmp.style.top.substring(0, tmp.style.top.length - 2))
+                window.scrollTo(0, top)
+            })
+            mymenu_Son.select_funcs_list[0].push(function () {
+                var i = Number(window.prompt())
+                if (isNaN(i))
+                    return
+                var tmp = myMark.go(i)
+                if (!tmp) return
+                var top = Number(
+                    tmp.style.top.substring(0, tmp.style.top.length - 2)
+                )
+                window.scrollTo(0, top)
+            })
+            mymenu_Son.select_funcs_list[0].push(function () {
+                window.scrollTo(0, 0)
+            })
+            mymenu_Son.select_funcs_list[0].push(function () {
+                window.scrollTo(0, 9999999)
+            })
+
+            mymenu_Son.select_funcs_list[0].push(null)
+            mymenu_Son.select_funcs_list[0].push(null)
+            mymenu_Son.select_funcs_list[0].push(function () {
+                myMark.clear()
+            })
+            mymenu_Son.select_funcs_list[0].push(null)
+
+        }
+
+        bindMark()
+
+
+    </script>
+    <script>
+        var output = document.getElementById("output")
+        var input = document.getElementById("input")
+        var Idnumber=-1
+
+        var laugue = {
+            "text": mydraw_text,
+            "js": mydraw_js,
+            "css": mydraw_css,
+            "html": mydraw_html,
+            "python": mydraw_py
+        }
+
+        var now_laugue = "text"
+
+        var ul = document.createElement("ul")
+        for (key of Object.keys(laugue)) {
+            var l = document.createElement("li")
+            text = document.createTextNode(key)
+            l.appendChild(text)
+            l.style.fontSize = "25px"
+            ul.appendChild(l)
+        }
+
+        ul.onclick = function (e) {
+            alert(e.target.innerText)
+            now_laugue = e.target.innerText
+        }
+
+        /*
+        function findword() {
+            let result = ["getElementById"]
+            let restr
+            for (re of result) {
+                restr+="<li>"+re+"</li>"
+            }
+            OpenPos(restr, 100, 100)
+            for (m of maind.childNodes) {
+                m.onclick = function () {
+                    input.value+=m.innerHTML
+                }
+            }
+        }*/
+
+
+        mymenu_Son.select_funcs_list[1].push(function () {
+            //olny read
+            clearInterval(Idnumber)
+            Idnumber=-1
+            switchto(tab2)
+            input.style.display = "none"
+        })
+
+        mymenu_Son.select_funcs_list[1].push(function () {
+            switchto(tab2)
+            input.style.display = "block"
+            if (Idnumber == -1)
+            Idnumber = setInterval(function () {
+                laugue[now_laugue].Run_Text()
+                to()
+                //findword()
+            }, 50)
+        })
+
+
+        mymenu_Son.select_funcs_list[1].push(function () {
+            OpenPos("", 0, 0)
+            maind.appendChild(ul)
+        })
+
+        mymenu_Son.select_funcs_list[1].push(function () {
+            clearInterval(Idnumber)
+            Idnumber=-1
+            input.style.display = "none"
+            switchto(tab2)
+            OpenPos("<input type='file' id='filechooser'/><input value='/'>", 0, 0)
+            var filechooser = document.getElementById("filechooser")
+            filechooser.onchange = function () {
+                input.value = this.value
+                mydraw_js.Run_Text()
+                to()
+                this.style.display = "none"
+            }
+        })
+
+
+    </script>
+    <script>
+        mymenu_Son.select_funcs_list[2].push(function () {
+            switchto(main)
+        })
+
+        mymenu_Son.select_funcs_list[2].push(function () {
+            OpenPos("g", 0, 0)
+        })
+
+        mymenu_Son.select_funcs_list[2].push(function () {
+            try {
+                Run(input.value)
+            }
+            catch (e) {
+                console.log(e)
+            }
+        })
+
+        mymenu_Son.select_funcs_list[2].push(function () {
+            switchto(tab3)
+        })
+
+
+
+    </script>
+    <script>
+        var myfile = document.querySelector("#myfile")
+        myfile.onchange = function (event) {
+            alert(this.value)
+        }
+        //例1
+
+        var file = document.getElementById("files")
+        file.onchange = function () {
+            Console(String(this.files[0].name))
+        }
+        //例2
+
+        var three = document.getElementById("threeinput")
+        three.onchange = function () {
+            Console(String(this.files[0].size) + "\n" + String(this.files[0].type))
+        }
+
+    </script>
+</body>
+
+</html>

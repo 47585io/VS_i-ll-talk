@@ -1,6 +1,6 @@
 var output = document.getElementById("output")
 var input = document.getElementById("input")
-var Idnumber
+var Idnumber=-1
 
 var laugue = {
 	"text":mydraw_text,
@@ -43,7 +43,8 @@ function findword() {
 
 mymenu_Son.select_funcs_list[1].push(function () {
 	//olny read
-    clearInterval(Idnumber)
+	clearInterval(Idnumber)
+	Idnumber=-1
 	switchto(tab2)
 	input.style.display = "none"
 })
@@ -51,6 +52,7 @@ mymenu_Son.select_funcs_list[1].push(function () {
 mymenu_Son.select_funcs_list[1].push(function () {
 	switchto(tab2)
 	input.style.display = "block"
+	if(Idnumber==-1)
 Idnumber= setInterval(function () {
 	laugue[now_laugue].Run_Text()
 	to()
@@ -66,6 +68,7 @@ mymenu_Son.select_funcs_list[1].push(function () {
 
 mymenu_Son.select_funcs_list[1].push(function () {
 	clearInterval(Idnumber)
+	Idnumber=-1
 	input.style.display = "none"
 	switchto(tab2)
 	OpenPos("<input type='file' id='filechooser'/><input value='/'>",0,0)

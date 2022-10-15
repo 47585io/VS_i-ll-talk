@@ -268,6 +268,7 @@ class Draw_js extends Draw {
 	]
 	keyword = [
 		"function",
+		"static",
 		"var",
 		"else if",
 		"if",

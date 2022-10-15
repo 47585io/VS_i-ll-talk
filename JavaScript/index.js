@@ -10,3 +10,7 @@ file.onchange = function () {
 }
 //例2
 
+var three = document.getElementById("threeinput")
+three.onchange = function () {
+	Console(String(this.files[0].size)+"\n"+String(this.files[0].type))	
+}

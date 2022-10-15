@@ -37,6 +37,10 @@ function bindInstall() {
 		ins.onclick = function () {
 			Console(this.parentNode.innerHTML)
 		}
+		ins.ondblclick = function () {
+			var str = this.parentNode.getAttribute("truecode")
+			Run(str)
+		}
 		ins.onmouseout = function () {
 			Close()
 		}

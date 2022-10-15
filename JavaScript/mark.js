@@ -63,7 +63,7 @@ class Mark_Stack{
 }
 
 var myMark = new Mark_Stack()
-document.body.ondblclick = function () { myMark.addMark(event.pageY) }
+document.body.onclick = function () { nclick(3, function () { myMark.addMark(event.pageY) } )}
 document.body.oncontextmenu=function(){myMark.DelMark(event.pageY)}
 
 

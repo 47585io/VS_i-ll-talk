@@ -29,14 +29,14 @@ textarea{
 	top: -1000px;
 	max-height: 40%;
 	max-width: 80%;
-	font-size: medium;
+	font-size: 15px;
 	z-index: 10;
 	padding: 7px;
 	background-color: #1e1f23 !important;
 }
 #maind * {
 	background-color: inherit;
-	font-size: medium;
+	font-size: 15px;
 }
 #main,#tab2,#tab3{
 	counter-reset: mytitle 0;
@@ -102,9 +102,9 @@ button{
 }
 
 .title{
-	font-size: 1.2em;
+	font-size: 1.3em !important;
 	transition-duration: 0.75s;
-	padding-left: 10px;
+	
 	font-weight: 450;
 }
 .title::before{
@@ -209,3 +209,10 @@ button{
 	font-weight: 400;
 	letter-spacing:0.1px;
 } 
+
+.note{
+	top: 10px;
+	position: relative;
+	text-align: center;
+	
+}
