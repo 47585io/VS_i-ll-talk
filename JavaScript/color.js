@@ -94,7 +94,7 @@ class Draw {
 		var str = ""
 		for (var i = 0; line[i] == " " || line[i] == "\t"; i++) {
 			if (line[i] == " ") str += "&nbsp;"
-			else if (line[i] == "\t") str += "        "
+			else if (line[i] == "\t") str += "       "
 		}
 		//retain ' ' on head
 		var tmp = this.Laugue_Split(line)
@@ -296,6 +296,7 @@ class Draw_js extends Draw {
 		"use strict",
 		"new",
 		"delete",
+		"typeof",
 	]
 	class_obj_list = [
 		"window",
@@ -410,23 +411,10 @@ class Draw_js extends Draw {
 	}
 	find() {
 		this.find_a(
-			[
-				"=",
-				"+",
-				"-",
-				"*",
-				"/",
-				"&lt;",
-				"&gt;",
-				"&",
-				"|",
-				"^",
-				"!",
-				
-			],
+			["=", "+", "-", "*", "/", "&lt;", "&gt;", "&", "|", "^", "!"],
 			"bgreen"
 		)
-		this.find_a(["]","["],"latgreen")
+		this.find_a(["]", "["], "latgreen")
 		this.find_a(["{", "}"], "zi")
 		this.find_a(['"', "'"], "green")
 		this.find_a([".", ":"], "yellow")
@@ -461,10 +449,12 @@ class Draw_js extends Draw {
 					)
 					this.now_li_obj.style.background = "pink"
 				} else if (this.keyword.indexOf(this.word_list[i]) != -1) {
-					if (this.word_list[i] == "class" && i < this.word_list.length - 1) {
-						this.class_obj_list.push(
-							this.word_list[i + 1])
-					
+					if (
+						this.word_list[i] == "class" &&
+						i < this.word_list.length - 1
+					) {
+						this.class_obj_list.push(this.word_list[i + 1])
+
 						this.word_list[i + 1] = this.draw(
 							this.word_list[i + 1],
 							"yellow",
@@ -512,9 +502,7 @@ class Draw_js extends Draw {
 									color,
 									"object: " + this.word_list[i]
 								)
-								
-							}
-							else if (c == "(") {
+							} else if (c == "(") {
 								this.word_list[i] = this.draw(
 									this.word_list[i],
 									color,
@@ -539,17 +527,15 @@ class Draw_js extends Draw {
 								)
 					}
 				}
-			}
-			catch (a) {
-			    this.word_list[i] = this.draw(
+			} catch (a) {
+				this.word_list[i] = this.draw(
 					this.word_list[i],
 					"white",
 					"ERROR!!!",
 					1
 				)
-		   }
+			}
 		}
-		
 	}
 }
 

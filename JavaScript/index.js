@@ -1,5 +1,10 @@
 var myfile = document.querySelector("#file")
 
+function No() {
+	Console("这代码想运行？想多了！")
+}
+
+
 function indexOne() {
 	//myfile.value=""
 	writetoConsole([myfile])
@@ -36,3 +41,34 @@ function indexFour() {
 	}
 }
 
+function indexFive() {
+	if (!window.Blob) alert("您的浏览器不支持Blob对象")
+	else {
+		var blob = new Blob(["1234"])
+		alert("支持")
+	}
+}
+
+var textarea = document.createElement("textarea")
+var result = document.createElement("p")
+var mybut = document.createElement("button")
+
+function indexSix() {
+	mybut.textContent = "Installer"
+	textarea.value = "您可以在这里写"
+	mybut.onclick = function () {
+        let text=textarea.value
+
+		if (!window.Blob) result.innerHTML = "Not Blob"
+		else var blob = new Blob([text])
+ 
+		if (window.URL) {
+			result.innerHTML =
+				'<a download href="' +
+				window.URL.createObjectURL(blob) +
+				'"target="_blank">Blob Installer</a>'
+		}
+	}
+
+	writetoConsole([textarea,result,mybut],0)
+}

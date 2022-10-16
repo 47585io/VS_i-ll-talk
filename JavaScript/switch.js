@@ -18,7 +18,13 @@ var olnytext
 function clearConsole() {
     tab3.innerHTML = ""
     olnytext = document.createElement("textarea")
+    olnytext.className = "bigtextarea"
+    olnytext.id="iamolny"
     tab3.appendChild(olnytext)
+}
+
+function disbleConsole() {
+    olnytext.disabled = "disabled"
 }
 
 function Console(str, save = 0) {
@@ -29,7 +35,8 @@ function Console(str, save = 0) {
     OpenPos("输出到输出窗口", event.pageX-200,event.pageY)
 }
 
-function writetoConsole(list) {
+function writetoConsole(list, is = 1) {
+   
     clearConsole()
     for (var l of list) {
         if (typeof (l) == 'string') {
@@ -37,6 +44,8 @@ function writetoConsole(list) {
         }
         tab3.insertBefore(l,olnytext)
     }
+    if (!is)
+        disbleConsole()
 }
 
 function Run(str) {

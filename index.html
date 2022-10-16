@@ -154,7 +154,7 @@ myfile.onchange=getSize()
 
 
 <p class="note">
-注意：对于图像类型的文件，Blob对象的type属性都是以<q>image/</q>开头，后面是图像类型。
+对于图像类型的文件，Blob对象的type属性都是以<q>image/</q>开头，后面是图像类型。
 </p>
 <br /><br />
 
@@ -165,12 +165,12 @@ myfile.onchange=getSize()
 myfile.onchange=function()
 {
 	typestr = this.files[0].type
-	if(/image\/\w+/.test(typestr))
+	if (/image\/\w+/.test(typestr))
         //  /image\/\w+/是一个正则表达式，用于判断它是否以image/开头，
         //当然，和字符串一样，js中的正则表达式也是对象，它的test方法用于将自己和指定字符串进行匹配
-	    alert(this.files[0].name)
+		alert(this.files[0].name)
 	else
-		alert("not image")
+	    alert("not image")
 }
 </pre>
 </div>
@@ -179,9 +179,9 @@ myfile.onchange=function()
 <h1 class="title">创建Blob</h1>
 <br>
 创建Blob对象的基本用法如下：<br><br>
-<div class="ther" truecode=" ">
+<div class="ther" truecode="No()">
 <pre class="code code_js">
-var blob = new Blob(blobParts, type);</pre>
+var blob = new Blob(blobParts, type,);</pre>
 </div>
 
 <ul class="small_li"><li>
@@ -194,15 +194,16 @@ blobParts：可选参数，数组类型，其中可以存放任意个一下以�
 <li>String对象。</li>
 </ul>
 <br><li>
-type：可选参数，字符串型，设置被创建的Blob对象的type属性值，即定义Blob对象的MIME类型。默认参数值为空字符串，表示未知类型。
+type：可选参数，字符串类型，设置被创建的Blob对象的type属性值，即定义Blob对象的MIME类型。默认参数值为空字符串，表示未知类型。
 </li>
 </ul>
 <br/>
 <p class="note">
-提示：当创建Blob对象时，可以使用两个可选参数。如果不使用任何参数，创建的Blob对象的size属性值为0，即Blob对象的字节长度为0
+当创建Blob对象时，可以使用两个可选参数。如果不使用任何参数，创建的Blob对象的size属性值为0，即Blob对象的字节长度为0
 </p>
 <br><br>
-下面代码演示了如何设置第一个参数。<br><br>
+【实例5】下面代码演示了如何设置第一个参数<br><br>
+<div class="ther" truecode="No()">
 <pre class="code code_js">
 var blob = new Blob(["4234" + "5678"]);
 var shorts = new Unit16Array(buffer, 622, 128);
@@ -210,6 +211,306 @@ var blobA = new Blob([blob, shorts]);
 var bytes = new Unit8Array(buffer, shorts.bytesOffset + shorts.byteLength);
 var blobB = new Blob([blob, blobA, bytes]);
 var blobC = new Blob([buffer, blob, blobA, bytes]);</pre>
+</div>
+
+<p class="note">ArrayBuffer和ArrayBufferView后面介绍</p>
+<br><br>
+【实例6】下面设置第二个参数。
+<br><br>
+<div class="ther" truecode="No()">
+	<pre class="code code_js">
+var blob = new Blob(["4234" + "5678"],{type:"text/plain"});
+//这里的type可以是任意的MIME类型，MIME 类型由两部分组成：媒介类型和子类型
+//对于 JavaScript，其MIME类型是"text/javascript"
+//具体的更多类型请前往W3C查看
+</pre>
+</div>
+
+<p class="note">目前主流浏览器都支持blob，但为了安全起见最好还是检查一下：
+</p><br>
+<div class="ther" truecode="indexFive()">
+	<pre class="code code_js">
+if (! window.Blob)
+    alert("您的浏览器不支持Blob对象");
+else{
+    var blob = new Blob(["1234"])
+	alert("支持");
+}
+</pre></div>
+<br>
+【实例7】下面实例显示了如何创建一个Blob对象<br><br>
+在页面中设计一个文本区域和一个按钮，当在文本框中输入文件，然后单击”创建Blob对象“按钮后，js脚本根据用户输入文字创建二进制对象，再根据二进制对象中的内容创建URL地址，最后再页面底部动态添加一个”Blob对象文件下载“链接，单击该链接可以下载新创建的文件，使用文本文件打开，其内容为用户在文本框中输入的文字
+<br><br>
+<div class="ther" truecode="indexSix()">
+	<pre class="code broken" mark="html,0,1;js,1,16;html,16,23;">
+<script>
+	function test() {
+		var text = document.getElementById("textarea").value;
+		var result = document.getElementById("result");
+		if ( ! window.Blob)
+			result.innerHTML = "Not Blob";
+		else
+			var blob = new Blob([text]); 
+
+		if ( window.URL) 
+			result.innerHTML = ' < a download href=" ' 
+			+ window.URL.createObjectURL(blob) + ' " '
+			+ ' target="_blank">Blob Installer< /a> ';	
+			//在p中添加一个a，并设置其为download下载类型，
+			//并生成一个指向Blob对象的数据的href链接，target=_blank设置链接在新窗口中打开，原窗口将被保留	
+	}
+</script>
+
+< body>
+	<textarea id="textarea"> </textarea> <br>
+	<button onclick="test()">Installer </button>
+	<p id="result"> </p>
+< /body>
+</pre>
+</div>
+<br><br>
+
+<h1 class="title">截取Blob</h1>
+Blob对象包含slice()方法，它可以从Blob对象中截取一部分数据，然后将这些数据创建为一个新的Blob对象并返回。
+<br><br>
+<div class="ther" truecode="No()">
+	<pre class="code code_js">
+var newBlob = blob.slice(start, end, contentType,);</pre></div>
+参数说明如下：
+
+<ul class="small_li"><li>
+	start：可选参数，整数值，设置起始位置。
+	<ul class="small_li">
+<li>如果值为0，表示从第一个字节开始赋值数据</li>
+<li>如果值为负值，且Blob对象的size属性值+start参数值大于等于0，则起始位置为Blob对象的size属性值+start参数值</li>
+<li>如果值为负值，且Blob对象的size属性值+start参数值小于0，则起始位置为Blob对象的起点位置</li>
+<li>如果值为正数，且大于等于Blob对象的size属性值，则起始位置为Blob对象的size属性值</li>
+<li>如果值为正数，且小于Blob对象的size属性值，则起始位置为start参数值</li>
+</ul >
+</li>
+<br>
+<li>
+	end：可选参数，整数值，设置终点位置。
+	<ul class="small_li">
+
+<li>如果忽略该参数，则终点位置为Blob对象的结束位置</li>
+<li>如果值为负数，且Blob对象的size属性值+end参数值大于等于0，则终点位置为Blob对象的size属性值+end参数值</li>
+<li>如果值为负数，且Blob对象的size属性值+end参数值小于0，则终点位置为Blob对象的起点位置</li>
+<li>如果值为正数，且大于等于Blob对象的size属性值，则终点位置为Blob对象的size属性值</li>
+<li>如果值为正数，且小于Blob对象的size属性值，则终点位置为end参数值</li>
+</ul>
+</li>
+<br>
+<li>
+contentType：可选参数，字符串值，指定新建Blob对象的MIME类型。
+</li>
+</ul>
+<br>
+<p class="newp">
+如果slice()方法的三个参数都省略，就相当于把一个Blob对象原样复制到一个新建的Blob对象中
+当起始位置大于等于终点位置时，slice()方法复制从起始位置开始到终点位置结束这一范围中的数据
+新建的Blob对象的size属性值为复制范围的长度，单位为byte
+</p>
+<br/><br/>
+
+【实例8】下面实例演示了Blob对象的slice()方法的应用。
+<div class='ther' truecode='No()'>
+<pre class='code code_js'>
+	
+function test() {
+	var file = document.getElementById("file").files[0];
+	if (file) {
+	    var file1 = file.slice();
+		var file2 = file.slice(0, file.size); 
+		var file3 = file.slice(-(Math.round(file.size / 2))); 
+		var file4 = file.slice(0, Math.roud(file.size / 2)); 
+		var file5 = file.slice(0, -150, "application/plain");
+	}
+}
+file.onchange=test
+</pre></div>
+<br/><br/>
+<h1 class='title'> 保存Blob</h1>
+HTML5支持indexedDB数据库中保存Blob对象
+<p class='note'>感兴趣的读者可以自行学习，这里并不讲述</p>
+<br/><br/><br>
+
+<h1 class='title'>FileReader对象</h1>
+FileReader能够把文件读入内存，并且读取文件中的数据
+<br>使用FileReader对象之前，需要实例化FileReader类型
+<br/><br/>
+<div class='ther' truecode='No()'>
+<pre class='code code_js' >
+if (typeof FileReader == "undefined") {
+    alert("当前浏览器不支持FileReader对象");
+} else {
+    var reader = new FileReader();
+}</pre>
+</div>
+<br/><br/>
+
+<h1 class='title'>读取文件</h1>
+FileReader对象包含5个方法，其中4个用于读取文件，另一个用来中断读取操作
+<br/><br/>
+<div class='ther' truecode='No()'>
+<pre class='code code_js'>
+readAsText(Blob,type,) //将Blob对象或文件中的数据读取为文本数据。该方法包含两个参数，其中第二个参数时文本的编码方式，默认值为UTF-8。
+readAsBinaryString(Blob) //将Blob对象或文件中的数据读取为二进制字符串。通常调用该方法将文件提交到服务器端，服务器端可以通过这段字符串存储文件。
+readAsURL(Blob) //将Blob对象或文件中的数据读取为DataURL字符串。该方法就是将数据以一种特殊格式的URL地址形式直接读入页面。
+readAsArrayBuffer(Blob) //将Blob对象或文件中的数据读取为一ArrayBuffer对象。
+abort() //不包含参数，中断读取操作。
+</pre>
+</div>
+<br/>
+
+<p class='note'> 上述前4个方法都包含一个Blob对象或File对象参数，无论读取成功或失败，都不会返回读取结果，读取结果存储在result属性中
+</p> <br/><br/> 【实例9】下面实例演示如何在网页中读取并显示图像文件、文本文件和二进制代码文件
+
+<div class='ther' truecode='No()'>
+<pre class='code broken' mark='html,0,1;js,1,41;html,41,51'>
+<script>
+	window.onload = function () {
+		var result = document.getElementById("result");
+		var file = document.getElementById("file");
+		if (typeof FileReader == 'undefined') {
+			result.innerHTML = "< h1> < /h1>";
+			file.setArrtibute('disabled', 'disabled');
+		}
+	}
+
+	function readAsDataURL() { 
+		var file = document.getElementById("file").files[0];
+		if (!/image\/\w+/.test(file.type)) {
+			alert("??????????");
+			return false;
+		}
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			result.onload = function (e) {
+				result.innerHTML = '<img src="' + this.result + '" alt=""/>';
+			}
+		}
+	}
+
+	function readAsBinaryString() {
+		var file = document.getElementById("file").flies[0];
+		var reader = new FileReader();
+		reader.readAsBinaryString(file);
+		reader.onload = function (f) {
+			result.innerHTML = this.result;
+		}
+	}
+
+	function readAsText() { 
+		var file = document.getElementById("file").files[0];
+		var reader = new FileReader();
+		reader.readAsText(file);
+		reader.onload = function (f) {
+			result.innerHTML = this.result;
+		}
+	}
+</script>
+
+< body>
+	<input type="file" id="file">
+	<input type="button" onclick="readAsDataURL();" value="????">
+	<input type="button" onclick="readAsBinaryString();" value="???????">
+	<input type="button" onclick="readAsText();" value="??????">
+	<div id="result" name="result"> </div>
+< /body>
+
+	
+</pre></div>
+
+上面实例演示了如何读取显文件，用户也可以选择不显示，直接提交给服务器，然后保存到文件或数据库中。注意，fileReader对象读取的数据都保存在result属性中。
+
+<br/><br/><br>
+
+<h1 class='title'>事件监测</h1>
+FileReader对象提供了6个事件，用于监测文件读取状态，简单说明如下。
+<br/><br/>
+<ul class="small_li">
+	<li>onabort：数据读取中断时触发</li>
+	<li>onprogress：数据读取中触发</li>
+	<li>onerror：数据读取出错时触发</li>
+	<li>onload：数据读取成功完成是触发</li>
+	<li>onloadstart：数据开始读取时触发</li>
+	<li>onloadend：数据读取完成时触发，无论成功与失败</li>
+</ul>
+<br/>
+【实例】下面实例设计当使用fileReader对象读取文件时，会发生一系列事件，控制台跟踪了读取状态先后顺序。
+<br/><br/>
+<div class='ther' truecode='No()'>
+<pre class='code code_js' mark=''>
+
+< !DOCTYPE html>
+< html lang="en">
+
+< head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>test</title>
+
+< /head>
+
+<style type="text/css">
+
+</style>
+
+<script>
+	window.onload = function () {
+		var result = document.getElementById("result");
+		var file = document.getElementById("file");
+		if (typeof FileReader == 'undefined') {
+			result.innerHTML = "<h1>当前浏览器不支持FileReader对象</h1>"
+			file.setAttribute('disabled', 'disabled');
+		}
+	}
+
+	function readFile() {
+		var file = document.getElementById("file").files[0];
+		var reader = new FileReader();
+		reader.onload = function (e) {
+			result.innerHTML = '<img src="' + this.result + '"alt=""/>';
+			console.log("load");
+		}
+		reader.onprogress = function (e) {
+			console.log("progress");
+		}
+		reader.onabort = function (e) {
+			console.log("abort");
+		}
+		reader.onerror = function (e) {
+			console.log("error");
+		}
+		reader.onloadstart = function (e) {
+			console.log("loadstart");
+		}
+		reader.onloadend = function (e) {
+			console.log("loadend");
+		}
+		reader.readAsDataURL(file);
+	}
+</script>
+
+< body>
+	<input type="file" id="file">
+	<input type="button" value="显示图像" onclick="readFile()">
+	<div name="result" id="result"></div>
+
+< /body>
+
+
+< /html>
+</pre>
+</div>
+在上面实例中，当单击”显示图像“按钮后，将在页面中读入一个图像文件，同时在控制台可以看到按顺序触发的事件。用户还可以在onprogress事件中使用HTML5新增元素progress显示文件的去读进度。
+
+<br/><br/>
+
+
+
+
 
 	</div>
 </body>

@@ -19,6 +19,7 @@ mymenu_Son.select_funcs_list[2].push(function () {
 
 mymenu_Son.select_funcs_list[2].push(function () {
 	switchto(tab3)
+	window.scrollTo(0,0)
 })
 
 
