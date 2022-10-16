@@ -14,6 +14,7 @@ var color = {
 	white: "#abb2bf",
 	grey: "grey",
 	white: "#ffffff",
+	latgreen:"#79c3af"
 }
 
 var value = 0
@@ -421,11 +422,11 @@ class Draw_js extends Draw {
 				"|",
 				"^",
 				"!",
-				"[",
-				"]",
+				
 			],
 			"bgreen"
 		)
+		this.find_a(["]","["],"latgreen")
 		this.find_a(["{", "}"], "zi")
 		this.find_a(['"', "'"], "green")
 		this.find_a([".", ":"], "yellow")

@@ -165,12 +165,12 @@ myfile.onchange=getSize()
 myfile.onchange=function()
 {
 	typestr = this.files[0].type
-	if(!/image\/\w+/.test(typestr))
-        //!/image\/\w+/是一个正则表达式，用于判断它是否以image/开头，
+	if(/image\/\w+/.test(typestr))
+        //  /image\/\w+/是一个正则表达式，用于判断它是否以image/开头，
         //当然，和字符串一样，js中的正则表达式也是对象，它的test方法用于将自己和指定字符串进行匹配
-	    alert("not image")
-	else
 	    alert(this.files[0].name)
+	else
+		alert("not image")
 }
 </pre>
 </div>
@@ -183,11 +183,33 @@ myfile.onchange=function()
 <pre class="code code_js">
 var blob = new Blob(blobParts, type);</pre>
 </div>
-<br /><br>
 
+<ul class="small_li"><li>
+blobParts：可选参数，数组类型，其中可以存放任意个一下以下类型的对象，这些对象中所携带的数据将被依序追加到Blob对象中。
 
-
-
+<ul class="small_li">
+<li>ArrayBuffer对象。</li>
+<li>ArrayBufferView对象。</li>
+<li>Blob对象。</li>
+<li>String对象。</li>
+</ul>
+<br><li>
+type：可选参数，字符串型，设置被创建的Blob对象的type属性值，即定义Blob对象的MIME类型。默认参数值为空字符串，表示未知类型。
+</li>
+</ul>
+<br/>
+<p class="note">
+提示：当创建Blob对象时，可以使用两个可选参数。如果不使用任何参数，创建的Blob对象的size属性值为0，即Blob对象的字节长度为0
+</p>
+<br><br>
+下面代码演示了如何设置第一个参数。<br><br>
+<pre class="code code_js">
+var blob = new Blob(["4234" + "5678"]);
+var shorts = new Unit16Array(buffer, 622, 128);
+var blobA = new Blob([blob, shorts]);
+var bytes = new Unit8Array(buffer, shorts.bytesOffset + shorts.byteLength);
+var blobB = new Blob([blob, blobA, bytes]);
+var blobC = new Blob([buffer, blob, blobA, bytes]);</pre>
 
 	</div>
 </body>

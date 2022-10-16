@@ -7,6 +7,7 @@
 	color: #abb2bf;
 	background-color: rgb(28, 32, 37);
 	font-size: 10px;
+	line-height: 22px;
 	font-weight: 400;
 	tab-size:4;
 	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
@@ -19,7 +20,7 @@
 textarea{
 	width: 100%;
 	height: 100%;
-	font-size: 10px;
+	font-size: medium;
 }
 
 #maind {
@@ -55,9 +56,7 @@ textarea{
 #main *{
 	background-color: inherit;
 }
-#tab4{
-	font-size: 10px;
-}
+
 #ball{
 	z-index: 10;
 	position: absolute;
@@ -72,10 +71,10 @@ textarea{
 	left: 0;
 	top: 0px;
    font-size: 14px;
-   width: calc(100% - 41px);
+   width: calc(100% - 40px);
    height: 2000% ;
    opacity: 0.1;
-   padding-left: 41px;
+   padding-left: 40px;
    filter: brightness(0);
    caret-color: rgb(0, 208, 255);
 }
@@ -96,7 +95,7 @@ a,.T{
 	cursor: default;
 }
 li:not(.code li){
-    color:#79c3a1;
+    color:#79c3af;
 	padding-left: 10px;
 	padding-right: 10px;
 }
@@ -108,7 +107,6 @@ button{
 .title{
 	font-size: 1.3em !important;
 	transition-duration: 0.75s;
-	
 	font-weight: 450;
 }
 .title::before{
@@ -118,25 +116,15 @@ button{
 	padding-right: 10px;
 	padding-left: 5px;
 }
-.small_title{
+.small_li{
 	transition-duration: 0.75s;
     font-size: 1.0em;
 	padding: 3px;
-	padding-left: 15px;
+	padding-left: 18px;
 }
-.small_title::before{
-	/*content: counter(mytitle)"."counter(my_small_title);
-	*/counter-increment: my_small_title 1;
-	padding-left: 10px;
-	padding-right: 10px
-}
+
 .title:hover,.small_title:hover{
 	filter: contrast(0.92);
-}
-.newp{	
-	line-height: 22px;
-	font-size: 10px;
-   
 }
 .code:not(#output) {
 	cursor: default;
@@ -148,7 +136,6 @@ button{
 	padding-bottom: 10px;
 	max-height: 80vh;
 	counter-reset: mycount 0;
-	
 }
 
 .install{
@@ -185,13 +172,11 @@ button{
 .code li{
 	cursor: default;
 	display: block;
-
 	counter-increment: mycount 1;
 	color: #abb2bf;
 	font-size: medium;
 	font-weight: 400;
 	line-height: 23px;
-
 }
 .code li *,.code *{
 	font-size: medium;
@@ -199,7 +184,7 @@ button{
 .code li:hover > * {
 	filter: contrast(0.82);
 }
-.code:not(.code_html,.code_css,.broken) li:hover > *:first-child{
+.code li:hover > *:first-child{
 	filter: contrast(1);
 }
 .code li:hover {
