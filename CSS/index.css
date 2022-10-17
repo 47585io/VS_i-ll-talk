@@ -211,3 +211,13 @@ button{
 	content: "注意: ";
 	color: rgb(255, 187, 0);
 }
+
+
+
+table,th,td{
+	text-align: center;
+	padding: 2px;
+	border: #abb2bf groove 1px;
+	font-size: 1.5em;
+	border-collapse: collapse;
+}

@@ -1,22 +1,23 @@
 var output = document.getElementById("output")
 var input = document.getElementById("input")
-var Idnumber=-1
+var Idnumber = -1
 
 var laugue = {
-	"text":mydraw_text,
-	"js":mydraw_js,
-	"css":mydraw_css,
-	"html":mydraw_html,
-	"python":mydraw_py} 
+	text: mydraw_text,
+	js: mydraw_js,
+	css: mydraw_css,
+	html: mydraw_html,
+	python: mydraw_py,
+}
 
-var now_laugue ="text"
+var now_laugue = "text"
 
 var ul = document.createElement("ul")
-for (key of Object. keys(laugue)) {
+for (key of Object.keys(laugue)) {
 	var l = document.createElement("li")
 	text = document.createTextNode(key)
 	l.appendChild(text)
-	l.style.fontSize="25px"
+	l.style.fontSize = "25px"
 	ul.appendChild(l)
 }
 
@@ -42,11 +43,10 @@ function findword() {
 	}
 }*/
 
-
 mymenu_Son.select_funcs_list[1].push(function () {
 	//olny read
 	clearInterval(Idnumber)
-	Idnumber=-1
+	Idnumber = -1
 	switchto(tab2)
 	input.style.display = "none"
 })
@@ -54,32 +54,29 @@ mymenu_Son.select_funcs_list[1].push(function () {
 mymenu_Son.select_funcs_list[1].push(function () {
 	switchto(tab2)
 	input.style.display = "block"
-	if(Idnumber==-1)
-Idnumber= setInterval(function () {
-	laugue[now_laugue].Run_Text()
-	to()
-	//findword()
-}, 50)
+	if (Idnumber == -1)
+		Idnumber = setInterval(function () {
+			laugue[now_laugue].Run_Text()
+			to()
+			//findword()
+		}, 50)
 })
 
-
-mymenu_Son.select_funcs_list[1].push(function () { 
-	OpenPos("",0, 0)
+mymenu_Son.select_funcs_list[1].push(function () {
+	OpenPos("", 0, 0)
 	maind.appendChild(ul)
-	window.scrollTo(0,0)
 })
 
 mymenu_Son.select_funcs_list[1].push(function () {
 	clearInterval(Idnumber)
-	Idnumber=-1
+	Idnumber = -1
 	input.style.display = "none"
 	switchto(tab2)
-	OpenPos("<input type='file' id='filechooser'/><input value='/'>",0,0)
-	var filechooser=document.getElementById("filechooser")
-	window.scrollTo(0,0)
+	OpenPos("<input type='file' id='filechooser'/><input value='/'>", 0, 0)
+	var filechooser = document.getElementById("filechooser")
+
 	filechooser.onchange = function () {
-		if (ReadImage(this, output))
-			return
+		if (ReadImage(this, output)) return
 		var myfilereader = new FileReader()
 		myfilereader.readAsBinaryString(this.files[0])
 		myfilereader.onload = function () {
@@ -93,10 +90,10 @@ mymenu_Son.select_funcs_list[1].push(function () {
 
 var a = document.getElementById("editdownload")
 mymenu_Son.select_funcs_list[1].push(function () {
-	var blob = new Blob( [input.value])
+	var blob = new Blob([input.value])
 	var str = window.URL.createObjectURL(blob)
-	
+
 	a.setAttribute("href", str)
-	OpenPos(" ",0,0)
+	OpenPos(" ", 0, 0)
 	maind.appendChild(a)
- })
+})

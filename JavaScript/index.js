@@ -128,3 +128,41 @@ function indexSeven() {
 }
 
 ////
+
+function readFile(file) {
+	file=file.files[0]
+	var reader = new FileReader()
+	reader.onload = function (e) {
+	    var div = document.createElement("div")
+		var img = document.createElement("img")
+		img.setAttribute("src", this.result)
+		div.appendChild(img)
+		div.style.overflow = "scroll"
+		retu.appendChild(div)
+		
+		Console("load",1)
+	}
+	reader.onprogress = function (e) {
+		Console("progress",1)
+	}
+	reader.onabort = function (e) {
+		Console("abort",1)
+	}
+	reader.onerror = function (e) {
+		Console("error",1)
+	}
+	reader.onloadstart = function (e) {
+		Console("loadstart",1)
+	}
+	reader.onloadend = function (e) {
+		Console("loadend",1)
+	}
+	reader.readAsDataURL(file)
+}
+
+function indexEight() {
+	writetoConsole([myfile,retu],0)
+	myfile.onchange = function () {
+		readFile(this,)
+	}
+}

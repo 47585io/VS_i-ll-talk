@@ -32,7 +32,7 @@ function Console(str, save = 0) {
         olnytext.value=""
     }
     olnytext.value += str+"\n"
-    OpenPos("输出到输出窗口", event.pageX-200,event.pageY+200)
+    OpenPos("输出到输出窗口", event.pageX-200,event.pageY+100)
 }
 
 function writetoConsole(list, is = 1) {

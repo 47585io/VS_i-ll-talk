@@ -316,6 +316,7 @@ class Draw_js extends Draw {
 		"Location",
 		"FileReader",
 		"FileSystem",
+		"URL",
 	]
 	constructor() {
 		super()
@@ -417,11 +418,12 @@ class Draw_js extends Draw {
 			"bgreen"
 		)
 		this.find_a(["]", "["], "latgreen")
+		this.find_a(["(", ")"], "blue")
 		this.find_a(["{", "}"], "zi")
 		this.find_a(['"', "'"], "green")
 		this.find_a([".", ":"], "yellow")
 		this.find_a([","], "red")
-		this.find_a(["(", ")"], "blue")
+		
 	}
 
 	find_a(char, color) {
@@ -450,7 +452,9 @@ class Draw_js extends Draw {
 						1
 					)
 					this.now_li_obj.style.background = "pink"
-				} else if (this.keyword.indexOf(this.word_list[i]) != -1) {
+				} 
+				
+				else if (this.keyword.indexOf(this.word_list[i]) != -1) {
 					if (
 						this.word_list[i] == "class" &&
 						i < this.word_list.length - 1
@@ -464,7 +468,12 @@ class Draw_js extends Draw {
 						)
 					}
 					this.word_list[i] = this.draw(this.word_list[i], "zi")
-				} else if (this.word_list[i + 1] == "=") {
+				} else if (
+					!isNaN(Number(this.word_list[i])) ||
+					this.defined_virible.indexOf(this.word_list[i]) != -1
+				)
+					this.word_list[i] = this.draw(this.word_list[i], "brown")
+				else if (this.word_list[i + 1] == "=") {
 					this.virible_list.push(this.word_list[i])
 					this.word_list[i + 1] = this.draw(
 						this.word_list[i + 1],
@@ -475,7 +484,15 @@ class Draw_js extends Draw {
 						"red",
 						"virible: " + this.word_list[i]
 					)
-				} else if (this.virible_list.indexOf(this.word_list[i]) != -1)
+				} else if (
+					this.virible_list.indexOf(this.word_list[i]) != -1 ||
+					this.virible_list.indexOf(
+						this.word_list[i].substring(
+							0,
+							this.word_list[i].length - 1
+						)
+					) != -1
+				)
 					this.word_list[i] = this.draw(
 						this.word_list[i],
 						"red",
@@ -487,18 +504,15 @@ class Draw_js extends Draw {
 						"yellow",
 						"object: " + this.word_list[i]
 					)
-				else if (
-					!isNaN(Number(this.word_list[i])) ||
-					this.defined_virible.indexOf(this.word_list[i]) != -1
-				)
-					this.word_list[i] = this.draw(this.word_list[i], "brown")
 				else {
 					for (var c of char) {
 						if (
 							this.word_list[i] == c ||
 							this.word_list[i].indexOf(c) != -1
 						)
-							if (c == ".") {
+							if (
+								c == "." 
+							) {
 								this.word_list[i] = this.draw(
 									this.word_list[i],
 									color,

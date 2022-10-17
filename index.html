@@ -79,18 +79,18 @@
 </p>
 		<div class="ther" truecode="indexOne()">
 		<pre class="code broken" mark="html,0,5;js,5,9;html,9,12">
-< !DOCTYPE HTML>
-< html>
-< body>
+&lt;!DOCTYPE HTML>
+&lt;html>
+&lt;body>
 	<input type="file" id="file">
-	<script>
+	&lt;script>
 	    var myfile=document.querySelector("#file")
 	        myfile.onchange=function (event,){
 			alert(this.value)
 		}
-	</script>
-< /body>
-< /html>
+	&lt;/script>
+&lt;/body>
+&lt;/html>
 		</pre>
 		</div >
 
@@ -109,11 +109,11 @@
 <div truecode="indexTwo()" class="ther">
 <pre class="code broken" mark="html,0,6;js,6,14;html,14,16" >
 
-< body>
+&lt;body>
 	<input type="file" id="file" multiple>
 	<!--multiple 属性是 HTML5 中的新属性, 如果使用该属性，则字段可接受多个值-->
-< /body>
-<script >
+&lt;/body>
+&lt;script>
 
 	var myfile = document.getElementById("file");
 	myfile.onchange = function () {
@@ -122,7 +122,7 @@
 		//files 为 Filelist对象, files[i] 为 File对象
 	};
 
-</script>
+&lt;/script>
 </pre>
 </div>
 
@@ -262,11 +262,11 @@ else{
 	}
 </script>
 
-< body>
+&lt;body>
 	<textarea id="textarea"> </textarea> <br>
 	<button onclick="test()">Installer </button>
 	<p id="result"> </p>
-< /body>
+&lt;/body>
 </pre>
 </div>
 <br><br>
@@ -359,8 +359,7 @@ readAsText(Blob,type,) //将Blob对象或文件中的数据读取为文本数据
 readAsBinaryString(Blob) //将Blob对象或文件中的数据读取为二进制字符串。通常调用该方法将文件提交到服务器端，服务器端可以通过这段字符串存储文件。
 readAsURL(Blob) //将Blob对象或文件中的数据读取为DataURL字符串。该方法就是将数据以一种特殊格式的URL地址形式直接读入页面。
 readAsArrayBuffer(Blob) //将Blob对象或文件中的数据读取为一ArrayBuffer对象。
-abort() //不包含参数，中断读取操作。
-</pre>
+abort() //不包含参数，中断读取操作。</pre>
 </div>
 <br/>
 
@@ -419,7 +418,7 @@ abort() //不包含参数，中断读取操作。
 	}
 </script>
 
-< body>
+&lt;body>
 	<input type="file" id="file">
 	
 	
@@ -427,7 +426,7 @@ abort() //不包含参数，中断读取操作。
 	<input type="button" onclick="readAsBinaryString();" value="读取二进制数据">
 	<input type="button" onclick="readAsText();" value="读取文本">
 	<div id="result" name="result"> </div>
-< /body>
+&lt;/body>
 
 	
 </pre></div>
@@ -448,31 +447,26 @@ FileReader对象提供了6个事件，用于监测文件读取状态，简单说
 	<li>onloadend：数据读取完成时触发，无论成功与失败</li>
 </ul>
 <br/>
-【实例】下面实例设计当使用fileReader对象读取文件时，会发生一系列事件，控制台跟踪了读取状态先后顺序。
+【实例10】下面实例设计当使用fileReader对象读取文件时，会发生一系列事件，控制台跟踪了读取状态先后顺序。
 <br/><br/>
-<div class='ther' truecode='No()'>
-<pre class='code code_js' mark=''>
-
-< !DOCTYPE html>
-< html lang="en">
-
-< head>
+<div class='ther' truecode='indexEight()'>
+<pre class='code broken' mark='html,0,11;js,11,44;html,44,52;'>
+&lt;!DOCTYPE html>
+&lt;html lang="en">
+&lt;head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>test</title>
-
-< /head>
-
+&lt;/head>
 <style type="text/css">
-
 </style>
-
 <script>
+
 	window.onload = function () {
 		var result = document.getElementById("result");
 		var file = document.getElementById("file");
 		if (typeof FileReader == 'undefined') {
-			result.innerHTML = "<h1>当前浏览器不支持FileReader对象</h1>"
+			result.innerHTML = "< h1>当前浏览器不支持FileReader对象< /h1>"
 			file.setAttribute('disabled', 'disabled');
 		}
 	}
@@ -503,21 +497,212 @@ FileReader对象提供了6个事件，用于监测文件读取状态，简单说
 	}
 </script>
 
-< body>
+&lt;body>
 	<input type="file" id="file">
 	<input type="button" value="显示图像" onclick="readFile()">
 	<div name="result" id="result"></div>
-
-< /body>
-
-
-< /html>
+&lt;/body>
+&lt;/html>
 </pre>
 </div>
-在上面实例中，当单击”显示图像“按钮后，将在页面中读入一个图像文件，同时在控制台可以看到按顺序触发的事件。用户还可以在onprogress事件中使用HTML5新增元素progress显示文件的去读进度。
+在上面实例中，当单击”显示图像“按钮后，将在页面中读入一个图像文件，同时在控制台可以看到按顺序触发的事件。用户还可以在onprogress事件中使用HTML5新增元素<a class="T" mytext="<a>< progress ></a><br> 元素表示任务的进度。
+<br><br>
+<li>labels	返回进度条的标记列表（如有）</li>
+<li>max	  设置或返回进度条的最终值</li>
+<li>position	返回进度条的当前位置</li>
+<li>value	设置或返回进度条的当前值</li>
+">progress</a>显示文件的去读进度。
 
+<br/><br/><br>
+
+<h1 class='title'> 使用缓存对象</h1>
+HTML5新增了ArrayBuffer对象和ArrayBufferView对象。ArrayBuffer对象表示一个固定长度的缓存区，用来存储文件或网络大数据；ArrayBufferView对象表示将缓存区中的数据转换为各种类型的数值数组。
+<br><br>
+<p class='note'>
+HTML5不允许直接对ArrayBuffer对象内的数据进行操作，需要使用ArrayBufferView对象来读写ArrayBuffer对象中的内容。
+</p>
+<br/><br/>
+<h1 class='title'>
+使用ArrayBuffer</h1>
+
+ArrayBuffer对象表示一个固定长度存储二进制数据的缓存区。用户不能直接存取ArrayBuffer缓存区中的内容，必须通过ArrayBufferView对象来读写ArrayBuffer缓存区中的内容。ArrayBuffer对象包含length属性，该属性表示缓存区的长度。
+<br/><br/>
+创建ArrayBuffer对象的方法如下：<br><br>
+<div class='ther' truecode='No()'>
+<pre class='code code_js' mark=''>
+var buffer = new ArrayBuffer(32);</pre>
+</div>
+参数为一个无符号长整数，用于设置缓存区的长度，单位为byte。ArrayBuffer缓存区创建成功之后，该缓存区内存储数据初始化为0。
+<br/><br/><br>
+<h1 class='title'>使用ArrayBufferView</h1>
+
+HTML5使用ArrayBufferView对象以一种标准格式来表示ArrayBuffer缓冲区中的数据。HTML5不允许直接使用ArrayBufferView对象，而是使用ArrayBufferView的子类实例来存取ArrayBuffer缓存区中的数据
+<br><br>
+
+<table>
+	<tr><th>类型</th> <th>字节长度</th> <th>说明</th></tr>
+	<tr><td>Int8Array        </td> <td>1</td><td>8位整数数组          </td></tr>
+	<tr><td>Unit8Array       </td> <td>1</td><td>8位无符号整数数组    </td></tr>
+	<tr><td>Unit8ClampedArray</td> <td>1</td><td>特殊8位无符号整数数组</td></tr>
+	<tr><td>Int16Array       </td> <td>2</td><td>16位整数数组         </td></tr>
+	<tr><td>Unit16Array      </td> <td>2</td><td>16位无符号整数数组   </td></tr>
+	<tr><td>Int32Array       </td> <td>4</td><td>32位整数数组         </td></tr>
+	<tr><td>Unit32Array      </td> <td>4</td><td>32位无符号整数数组   </td></tr>
+	<tr><td>Float32Array     </td> <td>4</td><td>32位IEEE浮点数数组   </td></tr>
+	<tr><td>Float64Array     </td> <td>8</td><td>64位IEEE浮点数数组   </td></tr>
+</table>
+<br>
+<p class='note'>
+Unit8ClampedArray子类用于定义一种特殊的8位无符号整数数组。该数组的作用：代替CanvasPixelArray数组用于Canvas API中。
+该数组与普通8位无符号整数数组的区别：将ArrayBuffer存储区中的的数值进行转化时，内部使用箱位（clamping）算法，而不是模数（modulo）算法。
+</p>
+<br><br>
+
+ArrayBufferView对象的作用：可以根据同一个ArrayBuffer对象创建各种数值类型的数组。
 <br/><br/>
 
+
+实例1】在下面实例代码中，根据相同的ArrayBuffer对象，可以创建32位的整数数组和8位的无符号整数数组。
+//根据ArrayBuffer对象创建32位整数数组
+var array1 = new Int32Array(ArrayBuffer);
+//根据同一个ArrayBuffer对象创建8位无符号整数数组
+var array2 = new Unit8Array(ArrayBuffer);
+
+在创建ArrayBufferView对象时，除了要指定ArrayBuffer缓存区外，还可以使用下面两个可选参数。
+
+byteOffset：为无符号长整型数值，设置开始引用位置与ArrayBuffer缓存区第1个字节之间的偏离值，单位为字节。需要注意的是，属性值必须为数组中单个元素的字节长度的倍数，省略该参数数值时，ArrayBufferView对象将从ArrayBuffer缓存区的第一个字节开始引用。
+length：为无符号长整数数值，设置数组中的元素的个数。如果省略该参数，将根据缓存区长度、ArrayBufferView对象开始引用的位置、每个元素的字节长度自动计算出元素的个数。
+
+如果设置了byteOffset和length参数值，数组从byteOffset参数值指定的开始位置，长度为length参数值为指定的元素个数*每个元素的字节长度。
+
+如果忽略了byteOffset和length参数值，数组将跨越整个ArrayBuffer缓存区。
+
+如果省略length参数值，数组将从byteOffset参数值指定的开始位置到ArrayBuffer缓存区的结束位置。
+
+ArrayBufferView对象包含以下3个属性。
+
+buffer：只读属性，表示ArrayBuffer对象，返回ArrayBufferView对象引用的ArrayBuffer缓存区。
+
+byteOffset：只读属性，表示一个无符号长整型数值，返回ArrayBufferView对象开始引用的位置与ArrayBuffer缓存区的第一个字节之间的偏离值，单位为字节。
+
+length：只读属性，表示一个无符号长整型数值，返回数组中的元素的个数。
+
+
+实例2】下面代码演示了如何获取ArrayBuffer缓存区中的数据。
+
+var byte = array2[4];
+array2[4] = 1;
+
+使用DataView
+除了使用ArrayBufferView子类外，也可以使用DataView子类存取ArrayBuffer缓存区中的数据。DataView继承于ArrayBufferView类，提供了直接存取ArrayBuffer缓存区中的数据的方法。
+
+创建DataView对象的方法如下：
+var view = new DataView(buffer, byteOffset, byteLenght);
+
+参数说明如下：
+
+buffer：为ArrayBuffer对象，表示一个ArrayBuffer缓存区。
+byteOffset：可选参数，为无符号长整型数值，表示DataView对象开始引用的位置，与ArrayBuffer缓存区第一个字节之间的偏移值，单位为字节。如果忽略该参数值，将从ArrayBuffer缓存区的第一个字节开始引用。
+byteLength：可选参数，为无符号长整型数值，表示DataView对象的总字节长度。
+
+
+如果设置了byteOffset和byteLength参数值，DataView对象从byteOffset参数值所指定的开始位置开始，长度为byteLength参数值所指定的总字节长度。
+
+如果忽略了byteOffer和byteLength参数值，DataView对象将跨越整个ArrayBuffer缓存区。
+
+如果省略byteLength参数值，DataView对象将从byteOffset参数做置顶的开始位置到ArrayBuffer缓存区的结束位置。
+
+DataView对象包含的方法如下表：
+
+方法 说明
+getInt8(byteOffset) 获取指定位置的一个8位整数值
+getUint8(byteOffset) 获取指定位置的8位无符号型整数值
+getInt16(byteOffset,littleEndian) 获取指定位置的一个16位整数值
+getUint16(byteOffset,littleEndian) 获取指定位置的一个16位无符号型整数值
+getUint32(byteOffset,littleEndian) 获取指定位置的一个32位无符号型整数值
+getFloat32(byteOffset,littleEndian) 获取指定位置的一个32位浮点数值
+getFloat64(byteOffset,littleEndian) 获取指定位置的一个64位浮点数值
+setInt8(byteOffset,value) 设置指定位置的一个8位整数值
+setUint8(byteOffset,value) 设置指定位置的一个8位无符号型整数值
+setInt16(byteOffset,value,littleEndian) 设置指定位置的一个16位整数数值
+setUint16(byteOffset,value,littleEndian) 设置指定位置的一个16位无符号型整数值
+setUint32(btyteOffset,value,littleEndian) 设置指定位置的一个32位无符号型整数值
+setFloat32(byteOffset,value,littleEndian) 设置指定位置的一个32位浮点数值
+setFloat64(byteOffset,value,littleEndian) 设置指定位置的一个64位符点数值
+
+
+提示：在上述方法中，各个参数说明如下：
+byteOffset：为一个无符号长整型数值，表示设置或读取整数所在位置在DataView对象对ArrayBuffer缓存区的开始引用位置之间相隔多少个字节。
+value：为无符号对应类型的数值，表示在指定位置进行设定的整型数值。
+littleEndian：可选参数，为布尔类型，判断该整型数数值的字节序。当值为true时，表示以little-endian方式设置或读取该整数数值；当参数值为false或忽略参数值时，表示以big-endian方式读取该整数数值。
+【实例】下面实例演示如何使用DataView对象的相关方法，实现对文件数据进行截取和检测。
+
+在上面实例中，先在页面中设计一个文件控件。
+当用户在浏览器中选取一个图像文件后，js先检测文件类型，当检测为图像文件时，再使用File对象的slice()方法将该文件中前4个字节的内容复制到一个Blob对象中。
+新建FileReader对象，使用该对象的readAsArrayBuffer()方法将Blob对象中的数据读取为一个ArrayBuffer对象。
+读取ArrayBuffer对象后，使用DataView对象读取该ArrayBuffer缓存区中位于开头位置的一个32位整数。
+根据该整数值判断用户选取的文件类型，并将文件类型显示在页面上。
+
+<div class='ther' truecode='No()'>
+<pre class='code broken' mark='html,0,10;js,10,49;html,49,56;'>
+&lt;!DOCTYPE html>
+&lt;html lang="en">
+&lt;head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>test</title>
+&lt;/head>
+<style type="text/css">
+</style>
+<script>
+	window.onload = function () {
+		var result = document.getElementById("result");
+		var file = document.getElementById("file");
+		if (typeof FileReader == 'undefined') {
+			result.innerHTML = "< h1>当前浏览器不支持FileReader对象< /h1>"
+			file.setAttribute('disabled', 'disabled');
+		}
+	}
+
+	function file_onchange() {
+		var file = document.getElementById("file").files[0];
+		if (!/image\/\w+/.test(file.type)) {
+			alert("请选择一个图像文件！");
+			return;
+		}
+		var slice = file.slice(0, 4);
+		var reader = new FileReader();
+		reader.readAsArrayBuffer(slice);
+		var type;
+		reader.onload = function (e) {
+			var buffer = this.result;
+			var view = new DataView(buffer);
+			var magic = view.getInt32(0, false);
+			if (magic < 0)
+				magic = magic + 0x1000000000;
+			magic = magic.toString(16).toUpperCase();
+			if (magic.indexOf('FFD8FF') >= 0)
+				type = "jpg文件";
+			if (magic.indexOf('89504E47') >= 0)
+				type = "png文件";
+			if (magic.indexOf('47494638') >= 0)
+				type = "gif文件";
+			if (magic.indexOf('49492A00') >= 0)
+				type = "tif文件";
+			if (magic.indexOf('424D') >= 0)
+				type = "bmp文件";
+			document.getElementById("result").innerHTML = '文件类型为：' + type;
+		}
+	}
+</script>
+
+&lt;body>
+	<input type="file" id="file" onchange="file_onchange()" /><br />
+	<output id="result"></output>
+&lt;/body>
+&lt;/html>
+</pre>
+</div>
 
 
 
