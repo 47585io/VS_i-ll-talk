@@ -314,6 +314,8 @@ class Draw_js extends Draw {
 		"Navigator",
 		"Screen",
 		"Location",
+		"FileReader",
+		"FileSystem",
 	]
 	constructor() {
 		super()
@@ -483,7 +485,7 @@ class Draw_js extends Draw {
 					this.word_list[i] = this.draw(
 						this.word_list[i],
 						"yellow",
-						"class: " + this.word_list[i]
+						"object: " + this.word_list[i]
 					)
 				else if (
 					!isNaN(Number(this.word_list[i])) ||

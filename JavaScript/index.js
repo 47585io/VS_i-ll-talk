@@ -72,3 +72,59 @@ function indexSix() {
 
 	writetoConsole([textarea,result,mybut],0)
 }
+
+
+//***"""" */
+var br = document.createElement("br")
+var br2 = document.createElement("br")
+var br3 = document.createElement("br")
+var input1=document.createElement("input")
+input1.setAttribute("type","button")
+input1.setAttribute("value", "读取图像")
+var input2 = document.createElement("input")
+input2.setAttribute("type", "button")
+input2.setAttribute("value", "读取二进制数据")
+var input3 = document.createElement("input")
+input3.setAttribute("type", "button")
+input3.setAttribute("value", "读取文本")
+
+var retu = document.createElement("div")
+var Reader = new FileReader()
+function ReadImage(myfile,retu) {
+	if (!myfile.files[0].type.startsWith("image"))
+		return 0
+	Reader.readAsDataURL(myfile.files[0])
+	Reader.onload = function () {
+		var div = document.createElement("div")
+		
+	var img = document.createElement("img")
+		img.setAttribute("src", Reader.result)
+		div.appendChild(img)
+		div.style.overflow="scroll"
+		retu.appendChild(div)
+		
+	}
+	return 1
+}
+function ReadDate(myfile,retu) {
+
+	Reader.readAsBinaryString(myfile.files[0])
+	Reader.onload = function () {
+		retu.innerHTML = this.result
+	}
+ }
+function ReadText(myfile,retu) {
+		Reader.readAsText(myfile.files[0])
+		Reader.onload = function () {
+			retu.innerHTML = this.result
+		}
+	}
+
+function indexSeven() {
+	writetoConsole([myfile,br, input1,br2, input2,br3, input3, retu], 0)
+	input1.onclick = function () { ReadImage(myfile,retu) }
+	input2.onclick = function () { ReadDate(myfile,retu) }
+	input3.onclick = function () { ReadText(myfile,retu) }
+}
+
+////

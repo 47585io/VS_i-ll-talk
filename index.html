@@ -43,7 +43,7 @@
 			<option>只写编辑器</option>
 			<option>选择语言</option>
 			<option>放入一个文件到编辑器</option>
-			<a download target="_blank" href="" id="edit_download"><option>将编辑器文本保存成文件</option></a>
+			<option>将编辑器文本保存成文件</option>
 		</select>
 		<select id="help">
 			<option>帮助</option>
@@ -56,6 +56,7 @@
 </div>
     <input id="file" type="file"> 
 	<div id="maind" ishover="0"></div>
+	<a download target="_blank" href="" id="editdownload">Install</a>
 	<div id="tab2">
 		<pre class='code' id="output">
 		</pre>
@@ -366,42 +367,49 @@ abort() //不包含参数，中断读取操作。
 <p class='note'> 上述前4个方法都包含一个Blob对象或File对象参数，无论读取成功或失败，都不会返回读取结果，读取结果存储在result属性中
 </p> <br/><br/> 【实例9】下面实例演示如何在网页中读取并显示图像文件、文本文件和二进制代码文件
 
-<div class='ther' truecode='No()'>
-<pre class='code broken' mark='html,0,1;js,1,41;html,41,51'>
+<div class='ther' truecode='indexSeven()'>
+<pre class='code broken' mark='html,0,1;js,1,50;html,48,60'>
 <script>
 	window.onload = function () {
 		var result = document.getElementById("result");
 		var file = document.getElementById("file");
 		if (typeof FileReader == 'undefined') {
-			result.innerHTML = "< h1> < /h1>";
+			result.innerHTML = "< h1>No FileReader< /h1>";
 			file.setArrtibute('disabled', 'disabled');
+			//当浏览器没有FileReader，禁用选取文件功能
 		}
 	}
 
-	function readAsDataURL() { 
+	function readAsDataURL() {
+		//如果我必须要读取图片二进制数据
 		var file = document.getElementById("file").files[0];
 		if (!/image\/\w+/.test(file.type)) {
-			alert("??????????");
+			alert("Is not a image");
 			return false;
 		}
 		var reader = new FileReader();
+		//在读取文件数据完毕后，FileReader会触发onload事件
 		reader.onload = function (e) {
 			result.onload = function (e) {
-				result.innerHTML = '<img src="' + this.result + '" alt=""/>';
+				result.innerHTML = '<img src="' + reader.result + '" alt=""/>';
+				//将指向读取的数据的链接给img，并将img添加至result中
 			}
 		}
 	}
 
 	function readAsBinaryString() {
+		//如果我只要读取二进制数据，而不管是文字的ASCII码还是数据块
 		var file = document.getElementById("file").flies[0];
 		var reader = new FileReader();
 		reader.readAsBinaryString(file);
 		reader.onload = function (f) {
 			result.innerHTML = this.result;
+			//此时将数据直接插入即可
 		}
 	}
 
 	function readAsText() { 
+		//		如果我要将读取的二进制数据转换成指定编码的文本的二进制数据
 		var file = document.getElementById("file").files[0];
 		var reader = new FileReader();
 		reader.readAsText(file);
@@ -413,9 +421,11 @@ abort() //不包含参数，中断读取操作。
 
 < body>
 	<input type="file" id="file">
-	<input type="button" onclick="readAsDataURL();" value="????">
-	<input type="button" onclick="readAsBinaryString();" value="???????">
-	<input type="button" onclick="readAsText();" value="??????">
+	
+	
+	<input type="button" onclick="readAsDataURL();" value="读取图像">
+	<input type="button" onclick="readAsBinaryString();" value="读取二进制数据">
+	<input type="button" onclick="readAsText();" value="读取文本">
 	<div id="result" name="result"> </div>
 < /body>
 

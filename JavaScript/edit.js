@@ -66,6 +66,7 @@ Idnumber= setInterval(function () {
 mymenu_Son.select_funcs_list[1].push(function () { 
 	OpenPos("",0, 0)
 	maind.appendChild(ul)
+	window.scrollTo(0,0)
 })
 
 mymenu_Son.select_funcs_list[1].push(function () {
@@ -75,18 +76,27 @@ mymenu_Son.select_funcs_list[1].push(function () {
 	switchto(tab2)
 	OpenPos("<input type='file' id='filechooser'/><input value='/'>",0,0)
 	var filechooser=document.getElementById("filechooser")
+	window.scrollTo(0,0)
 	filechooser.onchange = function () {
-		input.value = this.value
-		laugue[now_laugue].Run_Text()
-		to()
-		this.style.display="none"
+		if (ReadImage(this, output))
+			return
+		var myfilereader = new FileReader()
+		myfilereader.readAsBinaryString(this.files[0])
+		myfilereader.onload = function () {
+			input.value = myfilereader.result
+			laugue[now_laugue].Run_Text()
+			to()
+			//this.style.display = "none"
+		}
 	}
 })
 
+var a = document.getElementById("editdownload")
 mymenu_Son.select_funcs_list[1].push(function () {
 	var blob = new Blob( [input.value])
 	var str = window.URL.createObjectURL(blob)
-	var a=document.getElementById("edit_download")
-	a.setAttribute("href",str)
-	Console(output.innerHTML)
+	
+	a.setAttribute("href", str)
+	OpenPos(" ",0,0)
+	maind.appendChild(a)
  })
