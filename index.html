@@ -672,7 +672,7 @@ DataView对象包含的方法如下表：
 读取ArrayBuffer对象后，使用DataView对象读取该ArrayBuffer缓存区中位于开头位置的一个32位整数。
 根据该整数值判断用户选取的文件类型，并将文件类型显示在页面上。
 <br/><br/>
-<div class='ther' truecode='No()'>
+<div class='ther' truecode='indexNine()'>
 <pre class='code broken' mark='html,0,10;js,10,49;html,49,56;'>
 &lt;!DOCTYPE html>
 &lt;html lang="en">
@@ -734,8 +734,8 @@ DataView对象包含的方法如下表：
 </div>
 
 <br/><br/>
-
-使用FileSystem API
+<h1 class='title'>
+使用FileSystem API</h1>
 FileSystem API包括两部分内容：一部分内容为除后台线程之外的任何场合都可以使用的异步API，另一部分内容为后台线程中专用的同步API。
 
 FileSystem API具有如下特性。
@@ -746,11 +746,13 @@ FileSystem API具有如下特性。
 
 访问FileSystem
 使用window对象的requestFileSystem()方法可以请求访问受到浏览器沙箱保护的本地系统。
-
+<div class='ther' truecode='No()'>
+<pre class='code code_js' mark=''>
 window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
-window.requestFileSystem(type, size, successCallback, opt_ errorCallback);
-1
-2
+window.requestFileSystem(type, size, successCallback, opt_errorCallback);
+</pre>
+</div>
+
 参数说明如下：
 
 type：设置请求访问的文件系统使用的文件存储空间的类型，取值包括window.TEMPORARY和window.PERSISTENT。当值为window.TEMPORARY时，表示请求临时的存储空间，存储在临时存储空间中的数据可以被浏览器自行删除；当值为window.PERSISTENT时，表示请求永久存储空间，存储在该空间的数据不能被浏览器在用户不知情的情况下将其清除，只能通过用户或应用程序来清除，请求永久存储空间需要用户为应用程序指定一定的磁盘配额。

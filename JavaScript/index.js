@@ -161,8 +161,40 @@ function readFile(file) {
 }
 
 function indexEight() {
-	writetoConsole([myfile,retu],0)
+	writetoConsole([myfile,retu])
 	myfile.onchange = function () {
 		readFile(this,)
+	}
+}
+
+
+/////
+
+function indexNine() {
+	writetoConsole([myfile,retu])
+	myfile.onchange = function () { file_onchange(this.files[0]) }
+    function file_onchange(file) {
+		
+		if (!/image\/\w+/.test(file.type)) {
+			alert("请选择一个图像文件！")
+			return
+		}
+		var slice = file.slice(0, 4)
+		var reader = new FileReader()
+		reader.readAsArrayBuffer(slice)
+		var type
+		reader.onload = function (e) {
+			var buffer = this.result
+			var view = new DataView(buffer)
+			var magic = view.getInt32(0, false)
+			if (magic < 0) magic = magic + 0x1000000000
+			magic = magic.toString(16).toUpperCase()
+			if (magic.indexOf("FFD8FF") >= 0) type = "jpg文件"
+			if (magic.indexOf("89504E47") >= 0) type = "png文件"
+			if (magic.indexOf("47494638") >= 0) type = "gif文件"
+			if (magic.indexOf("49492A00") >= 0) type = "tif文件"
+			if (magic.indexOf("424D") >= 0) type = "bmp文件"
+			retu.innerHTML = "文件类型为：" + type
+		}
 	}
 }

@@ -542,11 +542,14 @@ class Draw_js extends Draw {
 							this.word_list[i].indexOf(c) != -1
 						)
 							if (c == ".") {
+								this.class_obj_list.push(this.word_list[i].substring(0,this.word_list[i].length-1))
 								this.word_list[i] = this.draw(
 									this.word_list[i],
 									color,
 									"object: " + this.word_list[i]
 								)
+								
+
 							} else if (c == "(") {
 								console.log(this.word_list[i])
 								this.func_list.push(
@@ -572,11 +575,14 @@ class Draw_js extends Draw {
 									"red",
 									"virible: " + this.word_list[i]
 								)
-							} else
+							}
+							else {
 								this.word_list[i] = this.draw(
 									this.word_list[i],
 									color
 								)
+								
+							}
 					}
 				}
 			} catch (a) {
