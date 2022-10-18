@@ -244,6 +244,7 @@ class Draw_js extends Draw {
 	virible_list = []
 	func_list = ["webkitRequestFileSystem", "requestFileSystem"]
 	defined_virible = [
+		"TEMPORARY",
 		"null",
 		"true",
 		"false",
@@ -551,7 +552,7 @@ class Draw_js extends Draw {
 								
 
 							} else if (c == "(") {
-								console.log(this.word_list[i])
+								
 								this.func_list.push(
 									this.word_list[i].substring(
 										0,

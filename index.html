@@ -737,51 +737,52 @@ DataView对象包含的方法如下表：
 <h1 class='title'>
 使用FileSystem API</h1>
 FileSystem API包括两部分内容：一部分内容为除后台线程之外的任何场合都可以使用的异步API，另一部分内容为后台线程中专用的同步API。
-
-FileSystem API具有如下特性。
-
-支持跨域通信，但是每个域的文件系统只能被该域专用，不能被其他域访问。
-存储的数据是永久的，不能被浏览器随意删除，但是存储在临时文件系统中的数据被浏览器自行删除。
-当Web应用连续发出多次对文件系统的操作请求时，每一个请求都将得到相应，同时第1个请求中所保存的数据可以被之后的请求立即得到。
-
-访问FileSystem
+<br/><br/>
+FileSystem API具有如下特性
+<br><br>
+<li>支持跨域通信，但是每个域的文件系统只能被该域专用，不能被其他域访问。</li>
+<br><li>存储的数据是永久的，不能被浏览器随意删除，但是存储在临时文件系统中的数据被浏览器自行删除。</li>
+<br><li>当Web应用连续发出多次对文件系统的操作请求时，每一个请求都将得到相应，同时第1个请求中所保存的数据可以被之后的请求立即得到。</li>
+<h1 class='title'>
+	<br/><br/>
+访问FileSystem</h1>
 使用window对象的requestFileSystem()方法可以请求访问受到浏览器沙箱保护的本地系统。
+<br/><br/>
 <div class='ther' truecode='No()'>
 <pre class='code code_js' mark=''>
 window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
-window.requestFileSystem(type, size, successCallback, opt_errorCallback);
+window.requestFileSystem(type, size, successCallback, opt_errorCallback,);
 </pre>
 </div>
-
 参数说明如下：
+<ul class="small_li">
 
-type：设置请求访问的文件系统使用的文件存储空间的类型，取值包括window.TEMPORARY和window.PERSISTENT。当值为window.TEMPORARY时，表示请求临时的存储空间，存储在临时存储空间中的数据可以被浏览器自行删除；当值为window.PERSISTENT时，表示请求永久存储空间，存储在该空间的数据不能被浏览器在用户不知情的情况下将其清除，只能通过用户或应用程序来清除，请求永久存储空间需要用户为应用程序指定一定的磁盘配额。
-size：设置请求的文件系统使用的文件存储空间大小，单位为byte。
-successCallback：设置请求成功时执行的回调函数，该回调函数的参数为一个FileSystem对象，表示请求访问的文件系统对象。
-opt_errorCallback：可选参数，设置请求失败时执行的回调函数，该回调函数的参数为一个FileError对象，其中存放了请求失败的各种信息。
-FileError对象包含code属性，其值为FileSystem API中预定义的常量值，说明如下。
 
-FileError.QUOTA_EXCEEDED_ERR：文件系统所使用的的存储空间尺寸超过磁盘配额控制中指定的空间尺寸。
-
-FileError.NOT_FOUND_ERR：未找到文件或目录。
-
-FileError.SECURITY_ERR：操作不当引起安全问题。
-
-FIleError.INVALID_MODIFICATION_ERR：指定的状态无效。
-
-FileError.ABORT_ERR：当前操作被终止。
-
-FileError.NOT_READABLE_ERR：用户企图访问目录或文件，但是用户访问的目录事实上是一个文件或者用户访问的文件事实上是一个目录。
-
-FileError.PATH_EXISTS_ERR：用户指定的路径中不存在需要访问的目录或文件。
-
-【实例】下面实例演示如何在Web应用中使用FileSystem API。
-<div class='ther' truecode='No()'>
-<pre class='code broken' mark='html,0,2;js,2,26;html,26,28;'>
-
+<li>type：设置请求访问的文件系统使用的文件存储空间的类型，取值包括window.TEMPORARY和window.PERSISTENT
+	<ul class="small_li"><li>当值为window.TEMPORARY时，表示请求临时的存储空间，存储在临时存储空间中的数据可以被浏览器自行删除；</li><li>当值为window.PERSISTENT时，表示请求永久存储空间，存储在该空间的数据不能被浏览器在用户不知情的情况下将其清除，只能通过用户或应用程序来清除，请求永久存储空间需要用户为应用程序指定一定的磁盘配额</li></ul></li>
+</ul>
+<br>	<li>size：设置请求的文件系统使用的文件存储空间大小，单位为byte</li>
+<br><li>successCallback：设置请求成功时执行的回调函数，该回调函数的参数为一个FileSystem对象，表示请求访问的文件系统对象。</li>
+<br><li>opt_errorCallback：可选参数，设置请求失败时执行的回调函数，该回调函数的参数为一个FileError对象，其中存放了请求失败的各种信息。</li>
+</ul>
+<br/><br/>
+FileError对象包含code属性，其值为FileSystem API中预定义的常量值，说明如下
+<br/><br/>
+<li>FileError.QUOTA_EXCEEDED_ERR：文件系统所使用的的存储空间尺寸超过磁盘配额控制中指定的空间尺寸。</li>
+<li>FileError.NOT_FOUND_ERR：未找到文件或目录。</li>
+<li>FileError.SECURITY_ERR：操作不当引起安全问题。</li>
+<li>FIleError.INVALID_MODIFICATION_ERR：指定的状态无效。</li>
+<li>FileError.ABORT_ERR：当前操作被终止。</li>
+<li>FileError.NOT_READABLE_ERR：用户企图访问目录或文件，但是用户访问的目录事实上是一个文件或者用户访问的文件事实上是一个目录</li>
+<li>FileError.PATH_EXISTS_ERR：用户指定的路径中不存在需要访问的目录或文件。</li>
+<br/><br/>
+【实例14】下面实例演示如何在Web应用中使用FileSystem API
+<br/><br/>
+<div class='ther' truecode='indexTen()'>
+<pre class='code broken' mark='html,0,1;js,1,28;html,28,30;'>
 <script>
-
 	function errorHandler(FileError) {
+		//通过FileError对象判断错误信息
 			switch (FileError.code) {
 				case FileError.QUOTA_EXCEEDED_ERR:
 					console.log('文件系统的存储空间超过磁盘限制控制中指定的空间尺寸');
@@ -801,40 +802,42 @@ FileError.PATH_EXISTS_ERR：用户指定的路径中不存在需要访问的目�
 	if (window.requestFileSystem) {
 		window.requestFileSystem(window.TEMPORARY, 1024 * 1024,
 			function (filesystem) {
+				//请求成功时执行的回调函数，该回调函数的参数为一个FileSystem对象，表示请求访问的文件系统对象
 				fs = filesystem;
+				console.log("Ok")
 			}, errorHandler);
+			//请求失败时执行的回调函数，该回调函数的参数为一个FileError对象，其中存放了请求失败的各种信息
 	}
-
 </script>
 
 </pre>
 </div>
-在上面代码中，先判断浏览器是否支持FileSystem API，如果支持则调用window.requestFileSystem()请求访问本地文件系统，如果请求失败则在控制台系那是错误信息。
-
-
-创建文件
+在上面代码中，先判断浏览器是否支持FileSystem API，如果支持则调用window.requestFileSystem()请求访问本地文件系统，如果请求失败则在控制台输出错误信息
+<br/><br/><br>
+<h1 class='title'>
+创建文件</h1>
 创建文件的操作思路：当用户调用requestFileSystem()方法请求访问本地文件系统时，如果请求成功，则执行一个回调函数，这个回调函数中包含一个参数，它指向可以获取的文件系统对象，该文件系统对象包含一个root属性，属性值为一个DirectoryEntry对象，表示文件系统的根目录对象。在请求成功时执行的回调函数中，可以通过文件系统的根目录对象的getFile()方法在根目录中创建文件。
-
-getFile()方法包含4个参数，简单说明如下：
-
-第一个参数：为字符串值，表示需要创建或获取的文件名。
-第二个参数：为一个自定义对象。当创建文件时，必须将该该对象的create属性值设置为true；当获取文件时，必须将该对象的create属性值设置为false；当创建文件时，如果该文件已存在，则覆盖该文件；当读取文件时，如果该文件已存在，且被使用排他方式打开，则抛出错误。
-第三个参数：为一个函数，代表获取文件或创建文件成功时执行的回调函数。在回调函数中可以使用一个参数，参数值为一个FileEntry对象，表示成功创建或获取的文件。
-第四个参数：为一个函数，代表获取文件或创建文件失败时的各种错误信息。
-
-FileError对象表示收到沙箱保护的文件系统中的每一个文件。该对象包含如下属性。
-
-isFile：区分对象是否为文件。属性值为true，表示对象为文件；属性值为false，表示该对象为目录。
-isDirectory：区分对象是否为目录。属性值为true，表示对象为目录；属性值为false，表示该对象为文件。
-name：表示该文件的文件名，包括文件的扩展名。
-fullPath：表示该文家你的完整路径。
-filesystem：表示该文件所在的文件系统对象。
-
-另外，FIleEntry对象包括remove()（删除）、moveTo()（移动）、copyTo(拷贝)等方法。
-
-【实例】下面实例演示了床架文件的基本方法。在页面中设计两个文本框和一个“创建文件”按钮，其中一个文本框控件用于输入文件名，另一个文本框用于输入文件大小，单位为byte，用户输入文件名及文件大小后，单击“创建文件”按钮，js会在文件系统中的根目录下创建文件，并将创建的文件信息显示在页面中。
 <br/><br/>
-<div class='ther' truecode='No()'>
+getFile()方法包含4个参数，简单说明如下：
+<br/><br/>
+<li>第一个参数：为字符串值，表示需要创建或获取的文件名。</li>
+<li>第二个参数：为一个自定义对象。当创建文件时，必须将该该对象的create属性值设置为true；当获取文件时，必须将该对象的create属性值设置为false；当创建文件时，如果该文件已存在，则覆盖该文件；当读取文件时，如果该文件已存在，且被使用排他方式打开，则抛出错误。</li>
+<li>第三个参数：为一个函数，代表获取文件或创建文件成功时执行的回调函数。在回调函数中可以使用一个参数，参数值为一个FileEntry对象，表示成功创建或获取的文件。</li>
+<li>第四个参数：为一个函数，代表获取文件或创建文件失败时的各种错误信息。</li>
+<br/><br/>
+FileError对象表示收到沙箱保护的文件系统中的每一个文件。该对象包含如下属性。
+<br><br>
+<li>isFile：区分对象是否为文件。属性值为true，表示对象为文件；属性值为false，表示该对象为目录。</li>
+<li>isDirectory：区分对象是否为目录。属性值为true，表示对象为目录；属性值为false，表示该对象为文件。</li>
+<li>name：表示该文件的文件名，包括文件的扩展名。</li>
+<li>fullPath：表示该文家你的完整路径。</li>
+<li>filesystem：表示该文件所在的文件系统对象。</li>
+<br/><br/>
+另外，FIleEntry对象包括remove()（删除）、moveTo()（移动）、copyTo(拷贝)等方法。
+<br/><br/>
+【实例15】下面实例演示了创建文件的基本方法。在页面中设计两个文本框和一个“创建文件”按钮，其中一个文本框控件用于输入文件名，另一个文本框用于输入文件大小，单位为byte，用户输入文件名及文件大小后，单击“创建文件”按钮，js会在文件系统中的根目录下创建文件，并将创建的文件信息显示在页面中。
+<br/><br/>
+<div class='ther' truecode='indexEleven()'>
 <pre class='code broken' mark='html,0,2;js,2,41;html,41,51;'>
 
 <script>
@@ -889,42 +892,51 @@ filesystem：表示该文件所在的文件系统对象。
 </pre>
 </div>
 <br/><br/>
-写入数据
+<h1 class='title'>
+写入数据</h1>
 HTML5使用FileWriter和FileWriterSync对象执行文件写入操作，其中FileWriterSync对象用于在后台线程中进行文件的写操作，FileWriter对象用于除后台线程之外任何场合进行写操作。
-
+<br/><br/>
 在FileSystem
 API中，当使用DirectoryEntry对象的getFile()方法成功获取一个文件对象之后，可以在获取文件对象成功时所执行的回调函数中，利用文件对象的createWriter()方法创建FileWriter对象。
-
+<br/><br/>
 createWriter()方法包含两个参数，分别为创建FileWriter对象成功时执行的回调函数和失败时执行的回调函数。在创建FileWriter对象成功时执行的回调函数中，包含一个参数，它表示FileWriter对象。
-
+<br/><br/>
 使用FileWrtier对象的write()方法在获取到文件中写入二进制数据。用法如下：
+<div class='ther' truecode='No()'>
+<pre class='code code_js' mark=''>
+fileWriter.write(data,);</pre>
+</div>
 
-fileWriter.write(data);
-1
 参数data为一个Blob对象，表示要写入的二进制数据。
 
 使用FileWriter对象的writeend和error事件可以进行监听，在事件回调函数中可以使用一个对象，它表示被触发的事件对象。
-
-添加数据
+<br/><br/><br />
+<h1 class='title'>
+添加数据</h1>
 项文件添加数据与创建文件并写入数据操作类似，区别在于获取文件后，首先使用FileWriter对象的seek()方法将文件读写位置设置到文件底部。用法如下
-
-fileWriter.seek(fileWriter.length);
-1
+<div class='ther' truecode='No()'>
+<pre class='code code_js' mark=''>
+fileWriter.seek(fileWriter.length);</pre></div>
 参数值为长整型数值。当值为正值时，表示文件读写位置与文件开头开头处的距离，单位为byte；当值为负值时，表示文件读写位置与文件结尾处之间的距离。
-
-读取数据
+<br/><br/><br />
+<h1 class='title'>
+读取数据</h1>
 在FileSystem API中，使用FileReader对象可以读取文件。
 
 在文件对象（FileEntry）的file()方法中包含两个参数，分别表示获取文件成功和失败的执行的回调函数，在获取文件成功时执行的回调函数中，可以设置一个参数，代表成功获取的文件。
-
-复制文件
+<br/><br/><br />
+<h1 class='title'>
+复制文件</h1>
 在FileSystem API中，可以使用File对象引用磁盘文件，然后将其写入文件系统。用法如下：
+<div class='ther' truecode='No()'>
+<pre class='code code_js' mark=''>
+fileWriter.write(file);</pre>
+</div>
 
-fileWriter.write(file);
-1
 参数file表示用户磁盘上的一个文件对象；也可以为一个Blob对象，表示需要写入的二进制数据，在HTML5，File对象继承Blob对象，所以在write()方法中可以使用File对象作为参数，表示使用某个文件中的原始数据进行写文件操作。
-
-删除文件
+<br/><br/><br />
+<h1 class='title'>
+删除文件</h1>
 在FileSystem API中，使用FileEntry对象的remove()方法可以删除该文件。remove()方法包含两个参数，被别为删除文件成功和失败时执行的回调函数。
 
 

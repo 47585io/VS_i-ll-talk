@@ -198,3 +198,82 @@ function indexNine() {
 		}
 	}
 }
+
+
+function errorHandler(FileError) {
+	switch (FileError.code) {
+		case FileError.QUOTA_EXCEEDED_ERR:
+			Console("文件系统的存储空间超过磁盘限制控制中指定的空间尺寸")
+			break
+		case FileError.NOT_FOUND_ERR:
+			Console("未找到文件或目录")
+			break
+		case FileError.INVALID_MODIFICATION_ERR:
+			Console("对文件或目录所指定的操作不能被执行")
+			break
+		case FileError.INVALID_STATE_ERR:
+			Console("指定的状态无效")
+			break
+	}
+}
+/////
+function indexTen() {	
+	window.requestFileSystem =
+		window.requestFileSystem || window.webkitRequestFileSystem
+	var fs = null
+	if (window.requestFileSystem) {
+		window.requestFileSystem(
+			window.TEMPORARY,
+			1024 * 1024,
+			function (filesystem) {
+				fs = filesystem
+				Console("Ok")
+			},
+			errorHandler
+		)
+	}
+}
+
+
+//////
+function indexEleven() {
+	input1.setAttribute("type", "text")
+	input1.setAttribute("value", "test.txt")
+	
+	input2.setAttribute("type", "text")
+	input2.setAttribute("value", "0")
+	
+	input3.setAttribute("type", "button")
+	input3.setAttribute("value", "创建文件")
+	input3.onclick = createFile
+	writetoConsole([input1,br,input2,br2,input3,br3,retu])
+    window.requestFileSystem =
+		window.requestFileSystem || window.webkitRequestFileSystem
+
+	function createFile() {
+		var size = input2.value
+		window.requestFileSystem(
+			PERSISTENT,
+			size,
+			function (fs) {
+				var filename = input1.value
+				fs.root.getFile(
+					filename,
+					{
+						create: true,
+					},
+					function (fileEntry) {
+						
+						var text = "完整路径：" + fileEntry.fullPath + "< br>"
+						text += "文件名：" + fileEntry.name + "< br>"
+						retu.innerHTML = text
+					},
+					errorHandler
+				)
+			},
+			errorHandler
+		)
+	}
+
+	
+}
