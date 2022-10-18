@@ -562,87 +562,116 @@ ArrayBufferView对象的作用：可以根据同一个ArrayBuffer对象创建各
 <br/><br/>
 
 
-实例1】在下面实例代码中，根据相同的ArrayBuffer对象，可以创建32位的整数数组和8位的无符号整数数组。
+【实例11】在下面实例代码中，根据相同的ArrayBuffer对象，可以创建32位的整数数组和8位的无符号整数数组。
 //根据ArrayBuffer对象创建32位整数数组
+<br/><br/>
+<div class='ther' truecode='No()'>
+<pre class='code code_js' mark=''>
 var array1 = new Int32Array(ArrayBuffer);
 //根据同一个ArrayBuffer对象创建8位无符号整数数组
-var array2 = new Unit8Array(ArrayBuffer);
+var array2 = new Unit8Array(ArrayBuffer);</pre>
+</div>
 
 在创建ArrayBufferView对象时，除了要指定ArrayBuffer缓存区外，还可以使用下面两个可选参数。
-
+<br/><br/>
+<li>
 byteOffset：为无符号长整型数值，设置开始引用位置与ArrayBuffer缓存区第1个字节之间的偏离值，单位为字节。需要注意的是，属性值必须为数组中单个元素的字节长度的倍数，省略该参数数值时，ArrayBufferView对象将从ArrayBuffer缓存区的第一个字节开始引用。
+</li><br/>
+<li>
 length：为无符号长整数数值，设置数组中的元素的个数。如果省略该参数，将根据缓存区长度、ArrayBufferView对象开始引用的位置、每个元素的字节长度自动计算出元素的个数。
+</li>
 
+	<br/>
 如果设置了byteOffset和length参数值，数组从byteOffset参数值指定的开始位置，长度为length参数值为指定的元素个数*每个元素的字节长度。
+<br>
 
 如果忽略了byteOffset和length参数值，数组将跨越整个ArrayBuffer缓存区。
+<br>
 
 如果省略length参数值，数组将从byteOffset参数值指定的开始位置到ArrayBuffer缓存区的结束位置。
 
+<br/><br/>
 ArrayBufferView对象包含以下3个属性。
-
+<br/><br/><li>
 buffer：只读属性，表示ArrayBuffer对象，返回ArrayBufferView对象引用的ArrayBuffer缓存区。
-
+</li>
+<li>
 byteOffset：只读属性，表示一个无符号长整型数值，返回ArrayBufferView对象开始引用的位置与ArrayBuffer缓存区的第一个字节之间的偏离值，单位为字节。
-
+</li>
+<li>
 length：只读属性，表示一个无符号长整型数值，返回数组中的元素的个数。
+</li>
+<br/><br/>
 
-
-实例2】下面代码演示了如何获取ArrayBuffer缓存区中的数据。
-
+【实例12】下面代码演示了如何获取ArrayBuffer缓存区中的数据。
+<br/><br/>
+<div class='ther' truecode='No()'>
+<pre class='code code_js' mark=''>
 var byte = array2[4];
-array2[4] = 1;
+array2[4] = 1;</pre>
+</div>
+<br/><br/>
+<h1 class='title'>
+使用DataView</h1>
 
-使用DataView
 除了使用ArrayBufferView子类外，也可以使用DataView子类存取ArrayBuffer缓存区中的数据。DataView继承于ArrayBufferView类，提供了直接存取ArrayBuffer缓存区中的数据的方法。
-
+<br/><br/>
 创建DataView对象的方法如下：
-var view = new DataView(buffer, byteOffset, byteLenght);
+<br /><br />
+<div class='ther' truecode='No()'>
+<pre class='code code_js' mark=''>
+var view = new DataView(buffer, byteOffset, byteLenght);</pre>
+</div>
 
+<br/>
 参数说明如下：
+<br/><br/>
 
-buffer：为ArrayBuffer对象，表示一个ArrayBuffer缓存区。
-byteOffset：可选参数，为无符号长整型数值，表示DataView对象开始引用的位置，与ArrayBuffer缓存区第一个字节之间的偏移值，单位为字节。如果忽略该参数值，将从ArrayBuffer缓存区的第一个字节开始引用。
-byteLength：可选参数，为无符号长整型数值，表示DataView对象的总字节长度。
-
+<li>buffer：为ArrayBuffer对象，表示一个ArrayBuffer缓存区。</li>
+<li>byteOffset：可选参数，为无符号长整型数值，表示DataView对象开始引用的位置，与ArrayBuffer缓存区第一个字节之间的偏移值，单位为字节。如果忽略该参数值，将从ArrayBuffer缓存区的第一个字节开始引用。</li>
+<li>byteLength：可选参数，为无符号长整型数值，表示DataView对象的总字节长度。</li>
+<br/>
 
 如果设置了byteOffset和byteLength参数值，DataView对象从byteOffset参数值所指定的开始位置开始，长度为byteLength参数值所指定的总字节长度。
-
+<br>
 如果忽略了byteOffer和byteLength参数值，DataView对象将跨越整个ArrayBuffer缓存区。
-
+<br>
 如果省略byteLength参数值，DataView对象将从byteOffset参数做置顶的开始位置到ArrayBuffer缓存区的结束位置。
-
+<br><br>
 DataView对象包含的方法如下表：
-
-方法 说明
-getInt8(byteOffset) 获取指定位置的一个8位整数值
-getUint8(byteOffset) 获取指定位置的8位无符号型整数值
-getInt16(byteOffset,littleEndian) 获取指定位置的一个16位整数值
-getUint16(byteOffset,littleEndian) 获取指定位置的一个16位无符号型整数值
-getUint32(byteOffset,littleEndian) 获取指定位置的一个32位无符号型整数值
-getFloat32(byteOffset,littleEndian) 获取指定位置的一个32位浮点数值
-getFloat64(byteOffset,littleEndian) 获取指定位置的一个64位浮点数值
-setInt8(byteOffset,value) 设置指定位置的一个8位整数值
-setUint8(byteOffset,value) 设置指定位置的一个8位无符号型整数值
-setInt16(byteOffset,value,littleEndian) 设置指定位置的一个16位整数数值
-setUint16(byteOffset,value,littleEndian) 设置指定位置的一个16位无符号型整数值
-setUint32(btyteOffset,value,littleEndian) 设置指定位置的一个32位无符号型整数值
-setFloat32(byteOffset,value,littleEndian) 设置指定位置的一个32位浮点数值
-setFloat64(byteOffset,value,littleEndian) 设置指定位置的一个64位符点数值
-
-
+<table>
+<tr><th>方法</th><th> 说明</th></tr>
+<tr><td>getInt8(byteOffset)         	    	</td><td>	获取指定位置的一个8位整数值</td></tr>
+<tr><td>getUint8(byteOffset)                	</td><td>	获取指定位置的8位无符号型整数值</td></tr>
+<tr><td>getInt16(byteOffset,littleEndian)   	</td><td>	获取指定位置的一个16位整数值</td></tr>
+<tr><td>getUint16(byteOffset,littleEndian)  	</td><td>	获取指定位置的一个16位无符号型整数值</td></tr>
+<tr><td>getUint32(byteOffset,littleEndian)  	</td><td>	获取指定位置的一个32位无符号型整数值</td></tr>
+<tr><td>getFloat32(byteOffset,littleEndian) 	</td><td>	获取指定位置的一个32位浮点数值</td></tr>
+<tr><td>getFloat64(byteOffset,littleEndian) 	</td><td>	获取指定位置的一个64位浮点数值</td></tr>
+<tr><td>setInt8(byteOffset,value) 			 	</td><td>	设置指定位置的一个8位整数值</td></tr>
+<tr><td>setUint8(byteOffset,value) 				</td><td>	设置指定位置的一个8位无符号型整数值</td></tr>
+<tr><td>setInt16(byteOffset,value,littleEndian) </td><td>	设置指定位置的一个16位整数数值</td></tr>
+<tr><td>setUint16(byteOffset,value,littleEndian) </td><td>	设置指定位置的一个16位无符号型整数值</td></tr>
+<tr><td>setUint32(btyteOffset,value,littleEndian)</td><td>	设置指定位置的一个32位无符号型整数值</td></tr>
+<tr><td>setFloat32(byteOffset,value,littleEndian)</td><td>   设置指定位置的一个32位浮点数值</td></tr>
+<tr><td>setFloat64(byteOffset,value,littleEndian)</td><td>   设置指定位置的一个64位符点数值</td></tr>
+</table><br>
+<p class='note'>
 提示：在上述方法中，各个参数说明如下：
-byteOffset：为一个无符号长整型数值，表示设置或读取整数所在位置在DataView对象对ArrayBuffer缓存区的开始引用位置之间相隔多少个字节。
-value：为无符号对应类型的数值，表示在指定位置进行设定的整型数值。
-littleEndian：可选参数，为布尔类型，判断该整型数数值的字节序。当值为true时，表示以little-endian方式设置或读取该整数数值；当参数值为false或忽略参数值时，表示以big-endian方式读取该整数数值。
-【实例】下面实例演示如何使用DataView对象的相关方法，实现对文件数据进行截取和检测。
-
-在上面实例中，先在页面中设计一个文件控件。
+</p>
+<br>
+<li>byteOffset：为一个无符号长整型数值，表示设置或读取整数所在位置在DataView对象对ArrayBuffer缓存区的开始引用位置之间相隔多少个字节。</li>
+<li>value：为无符号对应类型的数值，表示在指定位置进行设定的整型数值。</li>
+<li>littleEndian：可选参数，为布尔类型，判断该整型数数值的字节序。当值为true时，表示以little-endian方式设置或读取该整数数值；当参数值为false或忽略参数值时，表示以big-endian方式读取该整数数值。</li>
+<br/><br/>
+【实例13】下面实例演示如何使用DataView对象的相关方法，实现对文件数据进行截取和检测。
+<br><br>
+在实例中，先在页面中设计一个文件控件。
 当用户在浏览器中选取一个图像文件后，js先检测文件类型，当检测为图像文件时，再使用File对象的slice()方法将该文件中前4个字节的内容复制到一个Blob对象中。
 新建FileReader对象，使用该对象的readAsArrayBuffer()方法将Blob对象中的数据读取为一个ArrayBuffer对象。
 读取ArrayBuffer对象后，使用DataView对象读取该ArrayBuffer缓存区中位于开头位置的一个32位整数。
 根据该整数值判断用户选取的文件类型，并将文件类型显示在页面上。
-
+<br/><br/>
 <div class='ther' truecode='No()'>
 <pre class='code broken' mark='html,0,10;js,10,49;html,49,56;'>
 &lt;!DOCTYPE html>
@@ -697,12 +726,205 @@ littleEndian：可选参数，为布尔类型，判断该整型数数值的字�
 </script>
 
 &lt;body>
-	<input type="file" id="file" onchange="file_onchange()" /><br />
-	<output id="result"></output>
+	<input type="file" id="file" onchange="file_onchange()" /> <br />
+	<output id="result"> </output>
 &lt;/body>
 &lt;/html>
 </pre>
 </div>
+
+<br/><br/>
+
+使用FileSystem API
+FileSystem API包括两部分内容：一部分内容为除后台线程之外的任何场合都可以使用的异步API，另一部分内容为后台线程中专用的同步API。
+
+FileSystem API具有如下特性。
+
+支持跨域通信，但是每个域的文件系统只能被该域专用，不能被其他域访问。
+存储的数据是永久的，不能被浏览器随意删除，但是存储在临时文件系统中的数据被浏览器自行删除。
+当Web应用连续发出多次对文件系统的操作请求时，每一个请求都将得到相应，同时第1个请求中所保存的数据可以被之后的请求立即得到。
+
+访问FileSystem
+使用window对象的requestFileSystem()方法可以请求访问受到浏览器沙箱保护的本地系统。
+
+window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+window.requestFileSystem(type, size, successCallback, opt_ errorCallback);
+1
+2
+参数说明如下：
+
+type：设置请求访问的文件系统使用的文件存储空间的类型，取值包括window.TEMPORARY和window.PERSISTENT。当值为window.TEMPORARY时，表示请求临时的存储空间，存储在临时存储空间中的数据可以被浏览器自行删除；当值为window.PERSISTENT时，表示请求永久存储空间，存储在该空间的数据不能被浏览器在用户不知情的情况下将其清除，只能通过用户或应用程序来清除，请求永久存储空间需要用户为应用程序指定一定的磁盘配额。
+size：设置请求的文件系统使用的文件存储空间大小，单位为byte。
+successCallback：设置请求成功时执行的回调函数，该回调函数的参数为一个FileSystem对象，表示请求访问的文件系统对象。
+opt_errorCallback：可选参数，设置请求失败时执行的回调函数，该回调函数的参数为一个FileError对象，其中存放了请求失败的各种信息。
+FileError对象包含code属性，其值为FileSystem API中预定义的常量值，说明如下。
+
+FileError.QUOTA_EXCEEDED_ERR：文件系统所使用的的存储空间尺寸超过磁盘配额控制中指定的空间尺寸。
+
+FileError.NOT_FOUND_ERR：未找到文件或目录。
+
+FileError.SECURITY_ERR：操作不当引起安全问题。
+
+FIleError.INVALID_MODIFICATION_ERR：指定的状态无效。
+
+FileError.ABORT_ERR：当前操作被终止。
+
+FileError.NOT_READABLE_ERR：用户企图访问目录或文件，但是用户访问的目录事实上是一个文件或者用户访问的文件事实上是一个目录。
+
+FileError.PATH_EXISTS_ERR：用户指定的路径中不存在需要访问的目录或文件。
+
+【实例】下面实例演示如何在Web应用中使用FileSystem API。
+<div class='ther' truecode='No()'>
+<pre class='code broken' mark='html,0,2;js,2,26;html,26,28;'>
+
+<script>
+
+	function errorHandler(FileError) {
+			switch (FileError.code) {
+				case FileError.QUOTA_EXCEEDED_ERR:
+					console.log('文件系统的存储空间超过磁盘限制控制中指定的空间尺寸');
+					break;
+				case FileError.NOT_FOUND_ERR:
+					console.log('未找到文件或目录');
+					break;
+				case FileError.INVALID_MODIFICATION_ERR:
+					console.log('对文件或目录所指定的操作不能被执行');
+					break;
+				case FileError.INVALID_STATE_ERR:
+					console.log('指定的状态无效');
+			}
+		}
+	window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+	var fs = null;
+	if (window.requestFileSystem) {
+		window.requestFileSystem(window.TEMPORARY, 1024 * 1024,
+			function (filesystem) {
+				fs = filesystem;
+			}, errorHandler);
+	}
+
+</script>
+
+</pre>
+</div>
+在上面代码中，先判断浏览器是否支持FileSystem API，如果支持则调用window.requestFileSystem()请求访问本地文件系统，如果请求失败则在控制台系那是错误信息。
+
+
+创建文件
+创建文件的操作思路：当用户调用requestFileSystem()方法请求访问本地文件系统时，如果请求成功，则执行一个回调函数，这个回调函数中包含一个参数，它指向可以获取的文件系统对象，该文件系统对象包含一个root属性，属性值为一个DirectoryEntry对象，表示文件系统的根目录对象。在请求成功时执行的回调函数中，可以通过文件系统的根目录对象的getFile()方法在根目录中创建文件。
+
+getFile()方法包含4个参数，简单说明如下：
+
+第一个参数：为字符串值，表示需要创建或获取的文件名。
+第二个参数：为一个自定义对象。当创建文件时，必须将该该对象的create属性值设置为true；当获取文件时，必须将该对象的create属性值设置为false；当创建文件时，如果该文件已存在，则覆盖该文件；当读取文件时，如果该文件已存在，且被使用排他方式打开，则抛出错误。
+第三个参数：为一个函数，代表获取文件或创建文件成功时执行的回调函数。在回调函数中可以使用一个参数，参数值为一个FileEntry对象，表示成功创建或获取的文件。
+第四个参数：为一个函数，代表获取文件或创建文件失败时的各种错误信息。
+
+FileError对象表示收到沙箱保护的文件系统中的每一个文件。该对象包含如下属性。
+
+isFile：区分对象是否为文件。属性值为true，表示对象为文件；属性值为false，表示该对象为目录。
+isDirectory：区分对象是否为目录。属性值为true，表示对象为目录；属性值为false，表示该对象为文件。
+name：表示该文件的文件名，包括文件的扩展名。
+fullPath：表示该文家你的完整路径。
+filesystem：表示该文件所在的文件系统对象。
+
+另外，FIleEntry对象包括remove()（删除）、moveTo()（移动）、copyTo(拷贝)等方法。
+
+【实例】下面实例演示了床架文件的基本方法。在页面中设计两个文本框和一个“创建文件”按钮，其中一个文本框控件用于输入文件名，另一个文本框用于输入文件大小，单位为byte，用户输入文件名及文件大小后，单击“创建文件”按钮，js会在文件系统中的根目录下创建文件，并将创建的文件信息显示在页面中。
+<br/><br/>
+<div class='ther' truecode='No()'>
+<pre class='code broken' mark='html,0,2;js,2,41;html,41,51;'>
+
+<script>
+	window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+
+	function createFile() {
+		var size = document.getElementById("FileSize").value;
+		window.requestFileSystem(PERSISTENT, size,
+			function (fs) {
+				var filename = document.getElementById("FileName").value;
+				fs.root.getFile(
+					filename, {
+					create: ture
+				},
+					function (fileEntry) {
+						var text = "完整路径：" + fileEntry.fullPath + "< br>";
+						text += "文件名：" + fileEntry.name + "< br>";
+						document.getElementById("result").innerHTML = text;
+					},
+					errorHandler
+				);
+			},
+			errorHandler
+		);
+	}
+
+	function errorHandler(FileError) {
+		switch (FileError.code) {
+			case FileError.QUOTA_EXCEEDED_ERR:
+				console.log('文件系统的存储空间超过磁盘限制控制中指定的空间尺寸');
+				break;
+			case FileError.NOT_FOUND_ERR:
+				console.log('未找到文件或目录');
+				break;
+			case FileError.INVALID_MODIFICATION_ERR:
+				console.log('对文件或目录所指定的操作不能被执行');
+				break;
+			case FileError.INVALID_STATE_ERR:
+				console.log('指定的状态无效');
+		}
+	}
+</script>
+
+&lt;body>
+	<h1>创建文件</h1>
+	文件名：<input type="text" id="FileName" value="test.txt"> <br> <br> 文件大小：
+	<input type="text" id="FileSize" value="1024">Bytes<br> <br>
+	<input type="button" value="创建文件" onclick="createFile()"> <br> <br>
+	<output id="result"> </output>
+&lt;/body>
+
+</pre>
+</div>
+<br/><br/>
+写入数据
+HTML5使用FileWriter和FileWriterSync对象执行文件写入操作，其中FileWriterSync对象用于在后台线程中进行文件的写操作，FileWriter对象用于除后台线程之外任何场合进行写操作。
+
+在FileSystem
+API中，当使用DirectoryEntry对象的getFile()方法成功获取一个文件对象之后，可以在获取文件对象成功时所执行的回调函数中，利用文件对象的createWriter()方法创建FileWriter对象。
+
+createWriter()方法包含两个参数，分别为创建FileWriter对象成功时执行的回调函数和失败时执行的回调函数。在创建FileWriter对象成功时执行的回调函数中，包含一个参数，它表示FileWriter对象。
+
+使用FileWrtier对象的write()方法在获取到文件中写入二进制数据。用法如下：
+
+fileWriter.write(data);
+1
+参数data为一个Blob对象，表示要写入的二进制数据。
+
+使用FileWriter对象的writeend和error事件可以进行监听，在事件回调函数中可以使用一个对象，它表示被触发的事件对象。
+
+添加数据
+项文件添加数据与创建文件并写入数据操作类似，区别在于获取文件后，首先使用FileWriter对象的seek()方法将文件读写位置设置到文件底部。用法如下
+
+fileWriter.seek(fileWriter.length);
+1
+参数值为长整型数值。当值为正值时，表示文件读写位置与文件开头开头处的距离，单位为byte；当值为负值时，表示文件读写位置与文件结尾处之间的距离。
+
+读取数据
+在FileSystem API中，使用FileReader对象可以读取文件。
+
+在文件对象（FileEntry）的file()方法中包含两个参数，分别表示获取文件成功和失败的执行的回调函数，在获取文件成功时执行的回调函数中，可以设置一个参数，代表成功获取的文件。
+
+复制文件
+在FileSystem API中，可以使用File对象引用磁盘文件，然后将其写入文件系统。用法如下：
+
+fileWriter.write(file);
+1
+参数file表示用户磁盘上的一个文件对象；也可以为一个Blob对象，表示需要写入的二进制数据，在HTML5，File对象继承Blob对象，所以在write()方法中可以使用File对象作为参数，表示使用某个文件中的原始数据进行写文件操作。
+
+删除文件
+在FileSystem API中，使用FileEntry对象的remove()方法可以删除该文件。remove()方法包含两个参数，被别为删除文件成功和失败时执行的回调函数。
+
 
 
 

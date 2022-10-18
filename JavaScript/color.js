@@ -241,7 +241,18 @@ class Draw {
 }
 
 class Draw_js extends Draw {
-	virible_list = []
+	virible_list = [
+		"webkitRequestFileSystem",
+		"requestFileSystem",
+		"TEMPORARY",
+		"filesystem",
+		"FileError",
+		"QUOTA_EXCEEDED_ERR",
+		"NOT_FOUND_ERR",
+		"INVALID_MODIFICATION_ERR",
+		"INVALID_STATE_ERR",
+	]
+	func_list=[]
 	defined_virible = [
 		"null",
 		"true",
@@ -322,7 +333,7 @@ class Draw_js extends Draw {
 		super()
 		this.laugue = "code_js"
 	}
-
+	
 	Laugue_Split(line) {
 		var tmp = line
 		var tmp2 = line
@@ -414,7 +425,27 @@ class Draw_js extends Draw {
 	}
 	find() {
 		this.find_a(
-			["=", "+", "-", "*", "/", "&lt;", "&gt;", "&", "|", "^", "!"],
+			[
+				"+=",
+				"-=",
+				"*=",
+				"/=",
+				"==",
+				"%=",
+				"++",
+				"--",
+				"+",
+				"-",
+				"*",
+				"/",
+				"%",
+				"&lt;",
+				"&gt;",
+				"&",
+				"|",
+				"^",
+				"!",
+			],
 			"bgreen"
 		)
 		this.find_a(["]", "["], "latgreen")
@@ -423,7 +454,6 @@ class Draw_js extends Draw {
 		this.find_a(['"', "'"], "green")
 		this.find_a([".", ":"], "yellow")
 		this.find_a([","], "red")
-		
 	}
 
 	find_a(char, color) {
@@ -452,9 +482,7 @@ class Draw_js extends Draw {
 						1
 					)
 					this.now_li_obj.style.background = "pink"
-				} 
-				
-				else if (this.keyword.indexOf(this.word_list[i]) != -1) {
+				} else if (this.keyword.indexOf(this.word_list[i]) != -1) {
 					if (
 						this.word_list[i] == "class" &&
 						i < this.word_list.length - 1
@@ -504,26 +532,34 @@ class Draw_js extends Draw {
 						"yellow",
 						"object: " + this.word_list[i]
 					)
+				else if (this.func_list.indexOf(this.word_list[i]) != -1)
+					this.word_list[i] = this.draw(
+						this.word_list[i],
+						"blue",
+						"function: " + this.word_list[i]
+					)
 				else {
 					for (var c of char) {
 						if (
 							this.word_list[i] == c ||
 							this.word_list[i].indexOf(c) != -1
 						)
-							if (
-								c == "." 
-							) {
+							if (c == ".") {
 								this.word_list[i] = this.draw(
 									this.word_list[i],
 									color,
 									"object: " + this.word_list[i]
 								)
+								
 							} else if (c == "(") {
+								console.log(this.word_list[i])
+								this.func_list.push(this.word_list[i].substring(0,this.word_list[i].length-1))
 								this.word_list[i] = this.draw(
 									this.word_list[i],
 									color,
 									"function :  " + this.word_list[i] + "...)"
 								)
+									
 							} else if (c == ",") {
 								this.virible_list.push(
 									this.word_list[i].substring(
@@ -653,7 +689,8 @@ class Draw_html extends Draw {
 				1
 			)
 			this.now_li_obj.style.background = "pink"
-		} else {
+		}
+		else {
 			for (var c of char)
 				if (
 					this.word_list[i] == c ||
