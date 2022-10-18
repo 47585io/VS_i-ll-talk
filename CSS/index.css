@@ -16,6 +16,19 @@
 *::selection{
 	background-color: rgba(62,69,87,0.4);
 }
+*::-webkit-scrollbar{
+	background-attachment:scroll;
+	background-color: #282c34;
+}
+
+*::-webkit-scrollbar-track{
+	width: 0px;
+	border: 0px white groove;
+}
+
+*::-webkit-scrollbar-thumb:hover{
+	background-color: rgba(49,56,66,1);
+}
 
 .bigtextarea{
 	width: 100%;
@@ -220,4 +233,8 @@ table,th,td{
 	border: #abb2bf groove 1px;
 	font-size: 1.5em;
 	border-collapse: collapse;
+}
+
+table{
+	table-layout: auto;
 }

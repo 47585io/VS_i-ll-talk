@@ -241,18 +241,8 @@ class Draw {
 }
 
 class Draw_js extends Draw {
-	virible_list = [
-		"webkitRequestFileSystem",
-		"requestFileSystem",
-		"TEMPORARY",
-		"filesystem",
-		"FileError",
-		"QUOTA_EXCEEDED_ERR",
-		"NOT_FOUND_ERR",
-		"INVALID_MODIFICATION_ERR",
-		"INVALID_STATE_ERR",
-	]
-	func_list=[]
+	virible_list = []
+	func_list = ["webkitRequestFileSystem", "requestFileSystem"]
 	defined_virible = [
 		"null",
 		"true",
@@ -277,6 +267,13 @@ class Draw_js extends Draw {
 		"SyntaxError",
 		"TypeError",
 		"URIError",
+		"TEMPORARY",
+		"filesystem",
+		"FileError",
+		"QUOTA_EXCEEDED_ERR",
+		"NOT_FOUND_ERR",
+		"INVALID_MODIFICATION_ERR",
+		"INVALID_STATE_ERR",
 	]
 	keyword = [
 		"function",
@@ -333,7 +330,7 @@ class Draw_js extends Draw {
 		super()
 		this.laugue = "code_js"
 	}
-	
+
 	Laugue_Split(line) {
 		var tmp = line
 		var tmp2 = line
@@ -501,6 +498,12 @@ class Draw_js extends Draw {
 					this.defined_virible.indexOf(this.word_list[i]) != -1
 				)
 					this.word_list[i] = this.draw(this.word_list[i], "brown")
+				else if (this.func_list.indexOf(this.word_list[i]) != -1)
+					this.word_list[i] = this.draw(
+						this.word_list[i],
+						"blue",
+						"function: " + this.word_list[i]
+					)
 				else if (this.word_list[i + 1] == "=") {
 					this.virible_list.push(this.word_list[i])
 					this.word_list[i + 1] = this.draw(
@@ -532,12 +535,6 @@ class Draw_js extends Draw {
 						"yellow",
 						"object: " + this.word_list[i]
 					)
-				else if (this.func_list.indexOf(this.word_list[i]) != -1)
-					this.word_list[i] = this.draw(
-						this.word_list[i],
-						"blue",
-						"function: " + this.word_list[i]
-					)
 				else {
 					for (var c of char) {
 						if (
@@ -550,16 +547,19 @@ class Draw_js extends Draw {
 									color,
 									"object: " + this.word_list[i]
 								)
-								
 							} else if (c == "(") {
 								console.log(this.word_list[i])
-								this.func_list.push(this.word_list[i].substring(0,this.word_list[i].length-1))
+								this.func_list.push(
+									this.word_list[i].substring(
+										0,
+										this.word_list[i].length - 1
+									)
+								)
 								this.word_list[i] = this.draw(
 									this.word_list[i],
 									color,
 									"function :  " + this.word_list[i] + "...)"
 								)
-									
 							} else if (c == ",") {
 								this.virible_list.push(
 									this.word_list[i].substring(
