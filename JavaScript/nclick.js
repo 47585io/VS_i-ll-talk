@@ -23,20 +23,13 @@ function nclick(n,func)
     let time=new Date()
     let nowMs = time.getMilliseconds()
     let y = calcMs(lastMs,nowMs,xms)
-    if(y){
-        if(lastCount+1==n){
-            func()
-            lastMs=500
-            lastCount=0
-            return
-        }
-    }
-    else{
-        lastMs=500
-        lastCount = 0
-    }
-    lastCount++
+    if(y)
+         lastCount++
+    else
+         lastCount=1
     lastMs=nowMs
+    if(lastCount==n)
+         func()  
 }
 /*
 例如:
